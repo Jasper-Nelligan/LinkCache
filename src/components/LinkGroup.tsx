@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { LinkInfo } from '@/types';
+import { LinkGroupInfo } from '@/types';
 
-export default function LinkGroup({ links }: {links: LinkInfo[]}) {
-  const renderLinks = links.map((linkInfo, index) => {
+export default function LinkGroup({ linkGroupInfo }: {linkGroupInfo: LinkGroupInfo}) {
+  const renderLinks = linkGroupInfo.links.map((linkInfo, index) => {
     return (
       <div className="flex items-center" key={index}>
         <img src={linkInfo.icon} alt={linkInfo.name} className="h-6 w-6" />
@@ -13,8 +13,8 @@ export default function LinkGroup({ links }: {links: LinkInfo[]}) {
 
   return (
     <div className="shadow rounded-lg overflow-hidden">
-      <div className="bg-gray-200 p-2 flex justify-between items-center">
-        <div className="font-bold ml-2">Group 1</div>
+      <div style={{ backgroundColor: linkGroupInfo.color }} className="p-2 flex justify-between items-center">
+        <div className="font-bold ml-2">{linkGroupInfo.linkGroupName}</div>
         <Button variant="ghost" size="icon">
           <img src="/edit_icon.png" alt="Edit Links" className="h-4 w-4" />
         </Button>

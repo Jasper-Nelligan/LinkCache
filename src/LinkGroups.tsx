@@ -1,10 +1,10 @@
 import LinkGroup from "./components/LinkGroup";
-import { LinkInfo } from "./types";
+import { LinkGroupInfo } from "./types";
 
-export default function LinkGroups({linkData}: {linkData: LinkInfo[][]}) {
-  const renderLinkGroups = linkData.map((links, index) => {
+export default function LinkGroups({linkGroupInfoArray}: {linkGroupInfoArray: LinkGroupInfo[]}) {
+  const renderLinkGroups = linkGroupInfoArray.map((info, index) => {
     return (
-      <LinkGroup links={links} key={index} />
+      <LinkGroup linkGroupInfo={info} key={index} />
     )
   });
 
