@@ -1,15 +1,19 @@
 import { Button } from '@/components/ui/button';
 import { LinkGroupInfo } from '@/types';
 
-export default function LinkGroup({ linkGroupInfo }: {linkGroupInfo: LinkGroupInfo}) {
-  const renderLinks = linkGroupInfo.links.map((linkInfo, index) => {
-    return (
-      <div className="flex items-center" key={index}>
-        <img src={linkInfo.icon} alt={linkInfo.name} className="h-6 w-6" />
-        <a href={linkInfo.url} className="text-blue-500 ml-2">{linkInfo.name}</a>
-      </div>
-    )
-  });
+export default function LinkGroup({ linkGroupInfo }: { linkGroupInfo: LinkGroupInfo }) {
+  const getURLIconSrc = (url: string): string => {
+    const strippedURL = url.replace(/^https?:\/\//, '');
+    console.log(strippedURL)
+    return `https://icons.duckduckgo.com/ip2/${strippedURL}.ico`;
+  };
+
+  const renderLinks = linkGroupInfo.links.map((linkInfo, index) => (
+    <div className="flex items-center" key={index}>
+      <img src={getURLIconSrc(linkInfo.url)} alt={linkInfo.name} className="h-6 w-6" />
+      <a href={linkInfo.url} className="text-blue-500 ml-2">{linkInfo.name}</a>
+    </div>
+  ));
 
   return (
     <div className="shadow rounded-lg overflow-hidden">
@@ -23,5 +27,5 @@ export default function LinkGroup({ linkGroupInfo }: {linkGroupInfo: LinkGroupIn
         {renderLinks}
       </div>
     </div>
-  )
+  );
 }

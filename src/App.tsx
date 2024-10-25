@@ -11,22 +11,18 @@ const tempLinkGroupInfo: LinkGroupInfo[] = [
       {
         name: "Facebook",
         url: "https://facebook.com",
-        icon: "/facebook_logo.png"
       },
       {
         name: "Twitter",
         url: "https://twitter.com",
-        icon: "/x_logo.png"
       },
       {
         name: "Instagram",
         url: "https://instagram.com",
-        icon: "/instagram_logo.png"
       },
       {
         name: "Reddit",
         url: "https://reddit.com",
-        icon: "/reddit_logo.png"
       },
     ]
   },
