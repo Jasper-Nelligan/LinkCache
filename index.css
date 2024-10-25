@@ -1,8 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
+    /* Custom Colors */
+    --brand-primary:223 100% 59%;
+    --brand-secondary:232 39% 46%;
+    /* Shadcn Colors */
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -54,11 +59,12 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%}
 }
+
 @layer base {
   * {
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }

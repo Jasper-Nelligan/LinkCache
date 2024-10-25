@@ -1,14 +1,10 @@
 import { Input } from "@/components/ui/input"
 import "../index.css"
+import Header from "./Header"
 
 function App() {
   return (
-    <>
-    <div>
-      <p className="border border-black">Hello World</p>
-    </div>
-      <Input />
-    </>
+    <Header />
   )
 }
 
