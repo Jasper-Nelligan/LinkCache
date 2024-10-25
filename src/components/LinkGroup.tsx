@@ -13,7 +13,7 @@ export default function LinkGroup({ linkGroupInfo }: {linkGroupInfo: LinkGroupIn
 
   return (
     <div className="shadow rounded-lg overflow-hidden">
-      <div style={{ backgroundColor: linkGroupInfo.color }} className="p-2 flex justify-between items-center">
+      <div style={{ backgroundColor: linkGroupInfo.color }} className="p-1 flex justify-between items-center">
         <div className="font-bold ml-2">{linkGroupInfo.linkGroupName}</div>
         <Button variant="ghost" size="icon">
           <img src="/edit_icon.png" alt="Edit Links" className="h-4 w-4" />
