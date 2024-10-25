@@ -1,6 +1,16 @@
 import { Button } from '@/components/ui/button';
+import { LinkInfo } from '@/types';
 
-export default function LinkGroup() {
+export default function LinkGroup({ links }: {links: LinkInfo[]}) {
+  const renderLinks = links.map((linkInfo, index) => {
+    return (
+      <div className="flex items-center" key={index}>
+        <img src={linkInfo.icon} alt={linkInfo.name} className="h-6 w-6" />
+        <a href={linkInfo.url} className="text-blue-500 ml-2">{linkInfo.name}</a>
+      </div>
+    )
+  });
+
   return (
     <div className="shadow rounded-lg overflow-hidden">
       <div className="bg-gray-200 p-2 flex justify-between items-center">
@@ -10,22 +20,7 @@ export default function LinkGroup() {
         </Button>
       </div>
       <div className="flex flex-col gap-y-4 p-4">
-        <div className="flex items-center">
-          <img src="/facebook_logo.png" alt="Facebook" className="h-6 w-6" />
-          <a href="#" className="text-blue-500 ml-2">Facebook</a>
-        </div>
-        <div className="flex items-center">
-          <img src="/facebook_logo.png" alt="Facebook" className="h-6 w-6" />
-          <a href="#" className="text-blue-500 ml-2">Facebook</a>
-        </div>
-        <div className="flex items-center">
-          <img src="/facebook_logo.png" alt="Facebook" className="h-6 w-6" />
-          <a href="#" className="text-blue-500 ml-2">Facebook</a>
-        </div>
-        <div className="flex items-center">
-          <img src="/facebook_logo.png" alt="Facebook" className="h-6 w-6" />
-          <a href="#" className="text-blue-500 ml-2">Facebook</a>
-        </div>
+        {renderLinks}
       </div>
     </div>
   )
