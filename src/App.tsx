@@ -1,7 +1,9 @@
-import "../index.css"
-import Header from "./Header"
-import LinkGroups from "./LinkGroups"
-import { LinkGroupInfo } from "./types"
+import React, { useState } from 'react';
+import "../index.css";
+import Header from "./Header";
+import LinkGroups from "./LinkGroups";
+import { LinkGroupInfo } from "./types";
+import LinkGroupModal from "./components/linkGroupModal";
 
 const tempLinkGroupInfo: LinkGroupInfo[] = [
   {
@@ -26,15 +28,26 @@ const tempLinkGroupInfo: LinkGroupInfo[] = [
       },
     ]
   },
-]
+];
 
 function App() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <Header />
-      <LinkGroups linkGroupInfoArray={tempLinkGroupInfo} />
+      <LinkGroups linkGroupInfoArray={tempLinkGroupInfo} onOpenModal={handleOpenModal} />
+      {isModalOpen && <LinkGroupModal onClose={handleCloseModal} />}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

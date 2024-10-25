@@ -1,10 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { LinkGroupInfo } from '@/types';
 
-export default function LinkGroup({ linkGroupInfo }: { linkGroupInfo: LinkGroupInfo }) {
+function LinkGroup({ linkGroupInfo, onOpenModal }: { linkGroupInfo: LinkGroupInfo, onOpenModal: () => void }) {
   const getURLIconSrc = (url: string): string => {
     const strippedURL = url.replace(/^https?:\/\//, '');
-    console.log(strippedURL)
     return `https://icons.duckduckgo.com/ip2/${strippedURL}.ico`;
   };
 
@@ -19,7 +18,7 @@ export default function LinkGroup({ linkGroupInfo }: { linkGroupInfo: LinkGroupI
     <div className="shadow rounded-lg overflow-hidden">
       <div style={{ backgroundColor: linkGroupInfo.color }} className="p-1 flex justify-between items-center">
         <div className="font-bold ml-2">{linkGroupInfo.linkGroupName}</div>
-        <Button variant="ghost" size="icon">
+        <Button variant="ghost" size="icon" onClick={onOpenModal}>
           <img src="/edit_icon.png" alt="Edit Links" className="h-4 w-4" />
         </Button>
       </div>
@@ -29,3 +28,5 @@ export default function LinkGroup({ linkGroupInfo }: { linkGroupInfo: LinkGroupI
     </div>
   );
 }
+
+export default LinkGroup;
