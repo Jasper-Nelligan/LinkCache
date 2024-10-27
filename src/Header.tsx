@@ -15,8 +15,8 @@ export default function Header() {
       <div className="flex items-center">
         <img src="/linkcache_logo.png" alt="Logo" className="h-16 w-16" />
         <div className="ml-2">
-          <h1 className="text-brand-primary text-3xl font-bold">Link Cache</h1>
-          <h2 className="text-brand-secondary text-xl font-bold text">Effortless Access to Your Favourite Links</h2>
+          <h1 className="text-primary text-3xl font-bold">Link Cache</h1>
+          <h2 className="text-secondary text-xl font-bold text">Effortless Access to Your Favourite Links</h2>
         </div>
       </div>
       <div className="flex space-x-4 mr-4">

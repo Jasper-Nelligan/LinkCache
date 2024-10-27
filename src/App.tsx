@@ -3,7 +3,7 @@ import "../index.css";
 import Header from "./Header";
 import LinkGroups from "./LinkGroups";
 import { LinkGroupInfo } from "./types";
-import LinkGroupModal from "./components/linkGroupModal";
+import LinkGroupModal from './components/linkGroupModal';
 
 const tempLinkGroupInfo: LinkGroupInfo[] = [
   {
@@ -45,7 +45,7 @@ function App() {
     <>
       <Header />
       <LinkGroups linkGroupInfoArray={tempLinkGroupInfo} onOpenModal={handleOpenModal} />
-      {isModalOpen && <LinkGroupModal onClose={handleCloseModal} />}
+      <LinkGroupModal onClose={handleCloseModal} isModalOpen={isModalOpen}/>
     </>
   );
 }
