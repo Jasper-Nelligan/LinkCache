@@ -93,7 +93,7 @@ function App() {
       <Header />
       <LinkGroups linkGroupInfoArray={linkGroupInfoArray} onOpenModal={handleOpenModal} />
       <LinkGroupModal
-        linkGroupInfo={initialLinkGroupInfo}
+        linkGroupInfo={linkGroupInfoArray[0]}
         onClose={handleCloseModal}
         isModalOpen={isModalOpen}
         onFormSubmit={onModalSubmit}

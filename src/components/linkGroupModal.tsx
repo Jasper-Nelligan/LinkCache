@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ColorOptions from "./ui/colorOptions";
+import ColorOptions from "./colorOptions";
 import { LinkGroupInfo } from "@/types";
 
 export default function LinkGroupModal(
@@ -114,7 +114,7 @@ export default function LinkGroupModal(
                 <FormItem>
                   <FormLabel>Color</FormLabel>
                   <FormControl>
-                    <ColorOptions onColorChange={onColorChange} />
+                    <ColorOptions onColorChange={onColorChange} initialSelectedColor={linkGroupInfo.color}/>
                   </FormControl>
                 </FormItem>
               </div>
