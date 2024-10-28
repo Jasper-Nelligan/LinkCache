@@ -1,4 +1,4 @@
-export type LinkInfo = {
+export type LinkPair = {
   name: string;
   url: string;
 }
@@ -6,5 +6,5 @@ export type LinkInfo = {
 export type LinkGroupInfo = {
   linkGroupName: string;
   color: string;
-  links: LinkInfo[];
+  links: LinkPair[];
 }

@@ -10,11 +10,13 @@ import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import ColorOptions from "./ui/colorOptions";
+import { LinkGroupInfo } from "@/types";
 
-function LinkGroupModal({ onClose, isModalOpen }: { onClose: () => void; isModalOpen: boolean }) {
+function LinkGroupModal({ linkGroupInfo, onClose, isModalOpen }:
+  { linkGroupInfo: LinkGroupInfo; onClose: () => void; isModalOpen: boolean }) {
   const linkPairSchema = z.object({
-    linkName: z.string(),
-    linkURL: z.string(),
+    name: z.string(),
+    url: z.string(),
   });
 
   const formSchema = z.object({
@@ -26,9 +28,9 @@ function LinkGroupModal({ onClose, isModalOpen }: { onClose: () => void; isModal
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      linkGroupName: "",
-      color: "",
-      linkPairs: [{ linkName: "", linkURL: "" }],
+      linkGroupName: linkGroupInfo.linkGroupName,
+      color: linkGroupInfo.color,
+      linkPairs: linkGroupInfo.links,
     },
   });
 
@@ -50,7 +52,7 @@ function LinkGroupModal({ onClose, isModalOpen }: { onClose: () => void; isModal
     return fields.map((field, index) => (
       <div key={`${field.id}-${index}`} className="flex space-x-4 mt-2 justify-between items-center">
         <Controller
-          name={`linkPairs.${index}.linkName`}
+          name={`linkPairs.${index}.name`}
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -63,7 +65,7 @@ function LinkGroupModal({ onClose, isModalOpen }: { onClose: () => void; isModal
           )}
         />
         <Controller
-          name={`linkPairs.${index}.linkURL`}
+          name={`linkPairs.${index}.url`}
           control={form.control}
           render={({ field }) => (
             <FormItem>
@@ -123,7 +125,7 @@ function LinkGroupModal({ onClose, isModalOpen }: { onClose: () => void; isModal
               <div className="mt-4 mb-4">
                 {renderLinkPairs()}
               </div>
-              <Button className="mb-4" type="button" onClick={() => append({ linkName: "", linkURL: "" })}>
+              <Button className="mb-4" type="button" onClick={() => append({ name: "", url: "" })}>
                 Add Link
               </Button>
               <DialogFooter>

@@ -1,34 +1,49 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import "../index.css";
 import Header from "./Header";
 import LinkGroups from "./LinkGroups";
-import { LinkGroupInfo } from "./types";
-import LinkGroupModal from './components/linkGroupModal';
+import LinkGroupModal from './components/LinkGroupModal';
+import { initialLinkGroupInfo } from "./constants"
 
-const tempLinkGroupInfo: LinkGroupInfo[] = [
+const fakeLinkGroupInfo = [
+  initialLinkGroupInfo,
   {
-    linkGroupName: "Social Media",
+    linkGroupName: "Shopping",
     color: "#ff5733",
     links: [
       {
-        name: "Facebook",
-        url: "https://facebook.com",
+        name: "Amazon",
+        url: "https://amazon.com",
       },
       {
-        name: "Twitter",
-        url: "https://twitter.com",
+        name: "Ebay",
+        url: "https://ebay.com",
       },
       {
-        name: "Instagram",
-        url: "https://instagram.com",
-      },
-      {
-        name: "Reddit",
-        url: "https://reddit.com",
+        name: "Walmart",
+        url: "https://walmart.com",
       },
     ]
   },
-];
+  {
+    linkGroupName: "News",
+    color: "#ff5733",
+    links: [
+      {
+        name: "CNN",
+        url: "https://cnn.com",
+      },
+      {
+        name: "BBC",
+        url: "https://bbc.com",
+      },
+      {
+        name: "Fox News",
+        url: "https://foxnews.com",
+      },
+    ]
+  }
+]
 
 function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,8 +59,8 @@ function App() {
   return (
     <>
       <Header />
-      <LinkGroups linkGroupInfoArray={tempLinkGroupInfo} onOpenModal={handleOpenModal} />
-      <LinkGroupModal onClose={handleCloseModal} isModalOpen={isModalOpen}/>
+      <LinkGroups linkGroupInfoArray={fakeLinkGroupInfo} onOpenModal={handleOpenModal} />
+      <LinkGroupModal linkGroupInfo={initialLinkGroupInfo} onClose={handleCloseModal} isModalOpen={isModalOpen}/>
     </>
   );
 }
