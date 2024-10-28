@@ -1,9 +1,10 @@
 import { LinkGroupInfo } from "./types";
 
 export const initialLinkGroupInfo: LinkGroupInfo = {
+  id: 0,
   linkGroupName: "Social Media",
   color: "#ff5733",
-  links: [
+  linkPairs: [
     {
       name: "Facebook",
       url: "https://facebook.com",
@@ -20,5 +21,5 @@ export const initialLinkGroupInfo: LinkGroupInfo = {
       name: "Reddit",
       url: "https://reddit.com",
     },
-  ]
+  ],
 }

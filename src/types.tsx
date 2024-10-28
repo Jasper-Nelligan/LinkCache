@@ -4,7 +4,8 @@ export type LinkPair = {
 }
 
 export type LinkGroupInfo = {
+  id: number;
   linkGroupName: string;
   color: string;
-  links: LinkPair[];
+  linkPairs: LinkPair[];
 }

@@ -12,8 +12,13 @@ import { Input } from "@/components/ui/input";
 import ColorOptions from "./ui/colorOptions";
 import { LinkGroupInfo } from "@/types";
 
-function LinkGroupModal({ linkGroupInfo, onClose, isModalOpen }:
-  { linkGroupInfo: LinkGroupInfo; onClose: () => void; isModalOpen: boolean }) {
+export default function LinkGroupModal(
+  { linkGroupInfo, onClose, isModalOpen, onFormSubmit }:
+  { linkGroupInfo: LinkGroupInfo;
+    onClose: () => void;
+    isModalOpen: boolean;
+    onFormSubmit: (linkGroupInfo: LinkGroupInfo) => void }
+  ) {
   const linkPairSchema = z.object({
     name: z.string(),
     url: z.string(),
@@ -30,7 +35,7 @@ function LinkGroupModal({ linkGroupInfo, onClose, isModalOpen }:
     defaultValues: {
       linkGroupName: linkGroupInfo.linkGroupName,
       color: linkGroupInfo.color,
-      linkPairs: linkGroupInfo.links,
+      linkPairs: linkGroupInfo.linkPairs,
     },
   });
 
@@ -40,7 +45,7 @@ function LinkGroupModal({ linkGroupInfo, onClose, isModalOpen }:
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+    onFormSubmit({...data, id: linkGroupInfo.id});
     onClose();
   }
 
@@ -140,5 +145,3 @@ function LinkGroupModal({ linkGroupInfo, onClose, isModalOpen }:
     </Dialog>
   );
 }
-
-export default LinkGroupModal;
