@@ -7,67 +7,30 @@ import { initialLinkGroupInfo } from "./constants"
 import { addLinkGroupToLocalStorage } from './utils';
 import { LinkGroupInfo } from './types';
 
-const fakeLinkGroupInfo = [
-  initialLinkGroupInfo,
-  {
-    linkGroupName: "Shopping",
-    color: "#ff5733",
-    links: [
-      {
-        name: "Amazon",
-        url: "https://amazon.com",
-      },
-      {
-        name: "Ebay",
-        url: "https://ebay.com",
-      },
-      {
-        name: "Walmart",
-        url: "https://walmart.com",
-      },
-    ]
-  },
-  {
-    linkGroupName: "News",
-    color: "#ff5733",
-    links: [
-      {
-        name: "CNN",
-        url: "https://cnn.com",
-      },
-      {
-        name: "BBC",
-        url: "https://bbc.com",
-      },
-      {
-        name: "Fox News",
-        url: "https://foxnews.com",
-      },
-    ]
-  }
-]
-
-function App() {
+export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [linkGroupInfoArray, setLinkGroupInfoArray] = useState<LinkGroupInfo[]>([]);
+  const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(0);
   let nextId: number = 0;
 
   useEffect(() => {
-    const linkGroupsData = JSON.parse(localStorage.getItem("linkGroups") || '[]');
-    if (linkGroupsData.length === 0) {
+    const linkGroupsInfo = JSON.parse(localStorage.getItem("linkGroups") || '[]');
+    if (linkGroupsInfo.length === 0) {
+      linkGroupsInfo.push(initialLinkGroupInfo);
       addLinkGroupToLocalStorage(initialLinkGroupInfo);
     }
 
     // Find the maximum ID
-    const maxId = linkGroupsData.reduce((max: number, group: { id: number; }) => {
+    const maxId = linkGroupsInfo.reduce((max: number, group: { id: number; }) => {
       return group.id > max ? group.id : max;
     }, 0);
     nextId = maxId + 1;
 
-    setLinkGroupInfoArray(linkGroupsData);
+    setLinkGroupInfoArray(linkGroupsInfo);
   }, []);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (linkGroupId: number) => {
+    setSelectedLinkGroupId(linkGroupId);
     setIsModalOpen(true);
   };
 
@@ -93,7 +56,7 @@ function App() {
       <Header />
       <LinkGroups linkGroupInfoArray={linkGroupInfoArray} onOpenModal={handleOpenModal} />
       <LinkGroupModal
-        linkGroupInfo={linkGroupInfoArray[0]}
+        linkGroupInfo={linkGroupInfoArray[selectedLinkGroupId] ?? initialLinkGroupInfo}
         onClose={handleCloseModal}
         isModalOpen={isModalOpen}
         onFormSubmit={onModalSubmit}
@@ -101,5 +64,3 @@ function App() {
     </>
   );
 }
-
-export default App;

@@ -1,7 +1,7 @@
 import LinkGroup from "./components/LinkGroup";
 import { LinkGroupInfo } from "./types";
 
-function LinkGroups({ linkGroupInfoArray, onOpenModal }: { linkGroupInfoArray: LinkGroupInfo[], onOpenModal: () => void }) {
+function LinkGroups({ linkGroupInfoArray, onOpenModal }: { linkGroupInfoArray: LinkGroupInfo[], onOpenModal: (linkGroupId: number) => void }) {
   const renderLinkGroups = linkGroupInfoArray.map((info, index) => {
     return (
       <LinkGroup linkGroupInfo={info} key={index} onOpenModal={onOpenModal} />
