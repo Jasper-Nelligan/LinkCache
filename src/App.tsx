@@ -11,7 +11,7 @@ export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [linkGroupInfoArray, setLinkGroupInfoArray] = useState<LinkGroupInfo[]>([]);
   const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(-1);
-  let nextId: number = 0;
+  const [nextId, setNextId] = useState<number>(-1);
 
   useEffect(() => {
     const linkGroupsInfo = JSON.parse(localStorage.getItem("linkGroups") || '[]');
@@ -24,7 +24,7 @@ export default function App() {
     const maxId = linkGroupsInfo.reduce((max: number, group: { id: number; }) => {
       return group.id > max ? group.id : max;
     }, 0);
-    nextId = maxId + 1;
+    setNextId(maxId + 1);
 
     setLinkGroupInfoArray(linkGroupsInfo);
   }, []);
