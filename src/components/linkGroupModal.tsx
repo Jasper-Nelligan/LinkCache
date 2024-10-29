@@ -11,6 +11,7 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import ColorOptions from "./colorOptions";
 import { LinkGroupInfo } from "@/types";
+import { useEffect } from "react";
 
 export default function LinkGroupModal(
   { linkGroupInfo, onClose, isModalOpen, onFormSubmit }:
@@ -19,6 +20,13 @@ export default function LinkGroupModal(
     isModalOpen: boolean;
     onFormSubmit: (linkGroupInfo: LinkGroupInfo) => void }
   ) {
+
+  useEffect(() => {
+    form.setValue("linkGroupName", linkGroupInfo.linkGroupName);
+    form.setValue("color", linkGroupInfo.color);
+    form.setValue("linkPairs", linkGroupInfo.linkPairs);
+  }, [linkGroupInfo]);
+
   const linkPairSchema = z.object({
     name: z.string(),
     url: z.string(),
@@ -32,11 +40,6 @@ export default function LinkGroupModal(
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      linkGroupName: linkGroupInfo.linkGroupName,
-      color: linkGroupInfo.color,
-      linkPairs: linkGroupInfo.linkPairs,
-    },
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -83,7 +86,6 @@ export default function LinkGroupModal(
           )}
         />
         <Button type="button" onClick={() => {
-          console.log("Removing index:", index);
           remove(index);
         }} variant="ghost" className="self-end">
           <img src="/trash_icon.png" alt="Delete link" className="h-5 w-5" />

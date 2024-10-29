@@ -3,14 +3,14 @@ import "../index.css";
 import Header from "./Header";
 import LinkGroups from "./LinkGroups";
 import LinkGroupModal from './components/LinkGroupModal';
-import { initialLinkGroupInfo } from "./constants"
+import { emptyLinkGroupInfo, initialLinkGroupInfo } from "./constants"
 import { addLinkGroupToLocalStorage } from './utils';
 import { LinkGroupInfo } from './types';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [linkGroupInfoArray, setLinkGroupInfoArray] = useState<LinkGroupInfo[]>([]);
-  const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(0);
+  const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(-1);
   let nextId: number = 0;
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function App() {
   };
 
   const onModalSubmit = (linkGroupInfo: LinkGroupInfo) => {
-    if (linkGroupInfo.id === undefined) {
+    if (linkGroupInfo.id === -1) {
       linkGroupInfo.id = nextId;
     }
     addLinkGroupToLocalStorage(linkGroupInfo);
@@ -56,7 +56,7 @@ export default function App() {
       <Header />
       <LinkGroups linkGroupInfoArray={linkGroupInfoArray} onOpenModal={handleOpenModal} />
       <LinkGroupModal
-        linkGroupInfo={linkGroupInfoArray[selectedLinkGroupId] ?? initialLinkGroupInfo}
+        linkGroupInfo={linkGroupInfoArray.find(group => group.id === selectedLinkGroupId) ?? emptyLinkGroupInfo}
         onClose={handleCloseModal}
         isModalOpen={isModalOpen}
         onFormSubmit={onModalSubmit}

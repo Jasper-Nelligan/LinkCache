@@ -23,3 +23,10 @@ export const initialLinkGroupInfo: LinkGroupInfo = {
     },
   ],
 }
+
+export const emptyLinkGroupInfo: LinkGroupInfo = {
+  id: -1,
+  linkGroupName: "",
+  color: "#ff5733",
+  linkPairs: [],
+}
