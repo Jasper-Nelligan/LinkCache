@@ -18,12 +18,13 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export default function LinkGroupModal(
   { linkGroupInfo, onClose, isModalOpen, onFormSubmit }:
-  { linkGroupInfo: LinkGroupInfo;
-    onClose: () => void;
-    isModalOpen: boolean;
-    onFormSubmit: (linkGroupInfo: LinkGroupInfo) => void }
-  ) {
-
+    {
+      linkGroupInfo: LinkGroupInfo;
+      onClose: () => void;
+      isModalOpen: boolean;
+      onFormSubmit: (linkGroupInfo: LinkGroupInfo) => void
+    }
+) {
   useEffect(() => {
     form.setValue("linkGroupName", linkGroupInfo.linkGroupName);
     form.setValue("color", linkGroupInfo.color);
@@ -51,7 +52,7 @@ export default function LinkGroupModal(
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
-    onFormSubmit({...data, id: linkGroupInfo.id});
+    onFormSubmit({ ...data, id: linkGroupInfo.id });
     onClose();
   }
 
@@ -127,7 +128,7 @@ export default function LinkGroupModal(
                 <FormItem>
                   <FormLabel>Color</FormLabel>
                   <FormControl>
-                    <ColorOptions onColorChange={onColorChange} initialSelectedColor={linkGroupInfo.color}/>
+                    <ColorOptions onColorChange={onColorChange} initialSelectedColor={linkGroupInfo.color} />
                   </FormControl>
                 </FormItem>
               </div>
