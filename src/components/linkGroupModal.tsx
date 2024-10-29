@@ -1,7 +1,9 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
+  DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
 import { z } from "zod";
@@ -12,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import ColorOptions from "./colorOptions";
 import { LinkGroupInfo } from "@/types";
 import { useEffect } from "react";
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export default function LinkGroupModal(
   { linkGroupInfo, onClose, isModalOpen, onFormSubmit }:
@@ -97,6 +100,14 @@ export default function LinkGroupModal(
   return (
     <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
       <DialogContent className="max-h-[80vh] overflow-y-auto">
+        <DialogTitle>
+          {linkGroupInfo.linkGroupName ? "Edit Link Group" : "Add Link Group"}
+        </DialogTitle>
+        <DialogDescription>
+          <VisuallyHidden.Root>
+            {linkGroupInfo.linkGroupName ? "Edit Link Group" : "Add Link Group"}
+          </VisuallyHidden.Root>
+        </DialogDescription>
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
