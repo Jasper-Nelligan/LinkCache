@@ -96,7 +96,7 @@ export default function LinkGroupModal(
 
   return (
     <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
-      <DialogContent>
+      <DialogContent className="max-h-[80vh] overflow-y-auto">
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
