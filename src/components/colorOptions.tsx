@@ -8,8 +8,6 @@ export default function ColorOptions(
 ) {
   const [selectedColor, setSelectedColor] = useState<string>(initialSelectedColor);
 
-  console.log(selectedColor);
-
   useEffect(() => {
     onColorChange(selectedColor);
   }, [selectedColor, onColorChange]);
