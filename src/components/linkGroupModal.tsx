@@ -96,9 +96,9 @@ export default function LinkGroupModal(
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Link URL</FormLabel>
+              <FormLabel>URL</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Link URL" />
+                <Input {...field} placeholder="URL" />
               </FormControl>
               <FormMessage />
             </FormItem>
