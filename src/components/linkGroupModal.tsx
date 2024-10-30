@@ -17,14 +17,17 @@ import { useEffect } from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
 export default function LinkGroupModal(
-  { linkGroupInfo, onClose, isModalOpen, onFormSubmit }:
+  { linkGroupInfo, onClose, isModalOpen, onFormSubmit, onDeleteGroup }:
     {
       linkGroupInfo: LinkGroupInfo;
       onClose: () => void;
       isModalOpen: boolean;
       onFormSubmit: (linkGroupInfo: LinkGroupInfo) => void
+      onDeleteGroup: (linkGroupId: number) => void
     }
 ) {
+  const isEditForm = linkGroupInfo.linkGroupName ? true : false;
+
   useEffect(() => {
     form.reset({
       linkGroupName: linkGroupInfo.linkGroupName,
@@ -65,6 +68,11 @@ export default function LinkGroupModal(
 
   const onColorChange = (color: string) => {
     form.setValue("color", color);
+  }
+
+  const onDeleteGroupPressed = () => {
+    onDeleteGroup(linkGroupInfo.id);
+    onClose();
   }
 
   const renderLinkPairs = () => {
@@ -109,11 +117,11 @@ export default function LinkGroupModal(
     <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogTitle>
-          {linkGroupInfo.linkGroupName ? "Edit Link Group" : "Add Link Group"}
+          {isEditForm ? "Edit Link Group" : "Add Link Group"}
         </DialogTitle>
         <VisuallyHidden.Root>
           <DialogDescription>
-            {linkGroupInfo.linkGroupName ? "Edit Link Group" : "Add Link Group"}
+            {isEditForm ? "Edit Link Group" : "Add Link Group"}
           </DialogDescription>
         </VisuallyHidden.Root>
         <div>
@@ -154,10 +162,16 @@ export default function LinkGroupModal(
               <Button className="mb-4" type="button" onClick={() => append({ name: "", url: "" })}>
                 Add Link
               </Button>
-              <DialogFooter>
-                <Button type="submit" className="w-[100%]">
+              <DialogFooter className="flex">
+                <Button type="submit" className={`w-[${isEditForm ? "70" : "100"}%]`}>
                   Submit
                 </Button>
+                {
+                  isEditForm &&
+                  <Button type="button" variant="destructive" onClick={onDeleteGroupPressed} className="w-[30%]">
+                    Delete Group
+                  </Button>
+                }
               </DialogFooter>
             </form>
           </Form>

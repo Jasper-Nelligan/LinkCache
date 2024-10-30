@@ -4,7 +4,7 @@ import Header from "./Header";
 import LinkGroups from "./LinkGroups";
 import LinkGroupModal from './components/LinkGroupModal';
 import { emptyLinkGroupInfo, initialLinkGroupInfo } from "./constants"
-import { addLinkGroupToLocalStorage } from './utils';
+import { addLinkGroupToLocalStorage, removeLinkGroupFromLocalStorage } from './utils';
 import { LinkGroupInfo } from './types';
 
 export default function App() {
@@ -37,6 +37,11 @@ export default function App() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  
+  const handleDeleteGroup = (linkGroupId: number) => {
+    removeLinkGroupFromLocalStorage(linkGroupId);
+    setLinkGroupInfoArray(linkGroupInfoArray.filter((group: LinkGroupInfo) => group.id !== linkGroupId));
+  }
 
   const onModalSubmit = (linkGroupInfo: LinkGroupInfo) => {
     if (linkGroupInfo.id === -1) {
@@ -51,6 +56,7 @@ export default function App() {
     }
   }
 
+
   return (
     <>
       <Header />
@@ -60,6 +66,7 @@ export default function App() {
         onClose={handleCloseModal}
         isModalOpen={isModalOpen}
         onFormSubmit={onModalSubmit}
+        onDeleteGroup={handleDeleteGroup}
       />
     </>
   );

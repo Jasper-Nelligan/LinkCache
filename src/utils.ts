@@ -17,3 +17,14 @@ export function addLinkGroupToLocalStorage(linkGroupInfo: LinkGroupInfo) {
 
   localStorage.setItem("linkGroups", JSON.stringify(linkGroupDataLocalStorage));
 }
+
+export function removeLinkGroupFromLocalStorage(linkGroupId: number) {
+  const linkGroupDataLocalStorage = JSON.parse(localStorage.getItem("linkGroups") || '[]');
+
+  const existingIndex = linkGroupDataLocalStorage.findIndex((group: LinkGroupInfo) => group.id === linkGroupId);
+  if (existingIndex !== -1) {
+    linkGroupDataLocalStorage.splice(existingIndex, 1);
+  }
+
+  localStorage.setItem("linkGroups", JSON.stringify(linkGroupDataLocalStorage));
+}
