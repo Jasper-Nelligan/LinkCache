@@ -26,10 +26,12 @@ export default function LinkGroupModal(
     }
 ) {
   useEffect(() => {
-    form.setValue("linkGroupName", linkGroupInfo.linkGroupName);
-    form.setValue("color", linkGroupInfo.color);
-    form.setValue("linkPairs", linkGroupInfo.linkPairs);
-  }, [linkGroupInfo]);
+    form.reset({
+      linkGroupName: linkGroupInfo.linkGroupName,
+      color: linkGroupInfo.color,
+      linkPairs: linkGroupInfo.linkPairs.length > 0 ? linkGroupInfo.linkPairs : Array(4).fill({ name: "", url: "" }),
+    });
+  }, [linkGroupInfo])
 
   const linkPairSchema = z.object({
     name: z.string(),
