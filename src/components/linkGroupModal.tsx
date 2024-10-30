@@ -111,11 +111,11 @@ export default function LinkGroupModal(
         <DialogTitle>
           {linkGroupInfo.linkGroupName ? "Edit Link Group" : "Add Link Group"}
         </DialogTitle>
-        <DialogDescription>
-          <VisuallyHidden.Root>
+        <VisuallyHidden.Root>
+          <DialogDescription>
             {linkGroupInfo.linkGroupName ? "Edit Link Group" : "Add Link Group"}
-          </VisuallyHidden.Root>
-        </DialogDescription>
+          </DialogDescription>
+        </VisuallyHidden.Root>
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
