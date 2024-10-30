@@ -44,6 +44,11 @@ export default function LinkGroupModal(
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      linkGroupName: "",
+      color: "",
+      linkPairs: Array(4).fill({ name: "", url: "" }),
+    },
   });
 
   const { fields, append, remove } = useFieldArray({
