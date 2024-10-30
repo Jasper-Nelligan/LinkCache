@@ -117,11 +117,11 @@ export default function LinkGroupModal(
     <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogTitle>
-          {isEditForm ? "Edit Link Group" : "Add Link Group"}
+          {isEditForm ? "Edit Group" : "Add New Group"}
         </DialogTitle>
         <VisuallyHidden.Root>
           <DialogDescription>
-            {isEditForm ? "Edit Link Group" : "Add Link Group"}
+            {isEditForm ? "Edit Group" : "Add New Group"}
           </DialogDescription>
         </VisuallyHidden.Root>
         <div>
