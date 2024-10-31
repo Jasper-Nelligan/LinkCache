@@ -104,10 +104,8 @@ export default function LinkGroupModal(
             </FormItem>
           )}
         />
-        <Button type="button" onClick={() => {
-          remove(index);
-        }} variant="ghost" className="self-end">
-          <img src="/trash_icon.png" alt="Delete link" className="h-5 w-5" />
+        <Button type="button" onClick={() => {remove(index)}} variant="ghost" className="self-end">
+          <img src="/trash_icon.png" alt="Delete Link" className="h-5 w-5" />
         </Button>
       </div>
     ))
@@ -126,7 +124,7 @@ export default function LinkGroupModal(
         </VisuallyHidden.Root>
         <div>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit)} data-testid="form">
               <div className="flex justify-between items-center space-x-4">
                 <FormField
                   control={form.control}
@@ -135,7 +133,7 @@ export default function LinkGroupModal(
                     <FormItem className="flex-1">
                       <FormLabel>Group Name</FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input {...field} data-testid="group-name-input"/>
                       </FormControl>
                     </FormItem>
                   )}
@@ -164,7 +162,7 @@ export default function LinkGroupModal(
               </Button>
               <DialogFooter className="flex">
                 <Button type="submit" className={`w-[${isEditForm ? "70" : "100"}%]`}>
-                  Submit
+                  {isEditForm ? "Save Changes" : "Add Group"}
                 </Button>
                 {
                   isEditForm &&
