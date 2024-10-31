@@ -66,6 +66,15 @@ export default function LinkGroupModal(
     onClose();
   }
 
+  const onCancel = () => {
+    form.reset({
+      linkGroupName: linkGroupInfo.linkGroupName,
+      color: linkGroupInfo.color,
+      linkPairs: linkGroupInfo.linkPairs.length > 0 ? linkGroupInfo.linkPairs : Array(4).fill({ name: "", url: "" }),
+    });
+    onClose();
+  }
+
   const onColorChange = (color: string) => {
     form.setValue("color", color);
   }
@@ -112,7 +121,7 @@ export default function LinkGroupModal(
   }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={() => onClose()}>
+    <Dialog open={isModalOpen} onOpenChange={() => onCancel()}>
       <DialogContent className="max-h-[80vh] overflow-y-auto">
         <DialogTitle>
           {isEditForm ? "Edit Group" : "Add New Group"}

@@ -106,19 +106,23 @@ describe("LinkGroupModal", () => {
     expect(onDeleteGroup).toHaveBeenCalled();
   });
 
-  it("onClose is called when cancel button is clicked", () => {
+  it("form resets and onClose is called when cancel button is clicked", () => {
     const onClose = vi.fn();
-    const { getByText } = render(<LinkGroupModal linkGroupInfo={fakeLinkGroupInfo} onClose={onClose} isModalOpen={true} onFormSubmit={vi.fn()} onDeleteGroup={vi.fn()} />);
+    const { getByText, getByTestId } = render(<LinkGroupModal linkGroupInfo={fakeLinkGroupInfo} onClose={onClose} isModalOpen={true} onFormSubmit={vi.fn()} onDeleteGroup={vi.fn()} />);
     const closeBtn = getByText("Close");
+    const groupNameInput = getByTestId("group-name-input") as HTMLInputElement;
+    fireEvent.change(groupNameInput, { target: { value: "New name" } });
 
     fireEvent.click(closeBtn);
 
     expect(onClose).toHaveBeenCalled();
+    expect(groupNameInput.value).toBe("Group 1");
   });
 
-  it("onFormSubmit is called with correct arguments when form is submitted", () => {
+  it("form submission has correct arguments and closes modal", () => {
     const onFormSubmit = vi.fn();
-    const { getAllByPlaceholderText, getByTestId } = render(<LinkGroupModal linkGroupInfo={emptyLinkGroupInfo} onClose={vi.fn()} isModalOpen={true} onFormSubmit={onFormSubmit} onDeleteGroup={vi.fn()} />);
+    const onClose = vi.fn();
+    const { getAllByPlaceholderText, getByTestId } = render(<LinkGroupModal linkGroupInfo={emptyLinkGroupInfo} onClose={onClose} isModalOpen={true} onFormSubmit={onFormSubmit} onDeleteGroup={vi.fn()} />);
 
     const groupNameInput = getByTestId("group-name-input");
     fireEvent.change(groupNameInput, { target: { value: "Group Name 1" } });
@@ -152,6 +156,7 @@ describe("LinkGroupModal", () => {
 
     waitFor(() => {
       expect(onFormSubmit).toHaveBeenCalledWith(linkGroupInfo);
+      expect(onClose).toHaveBeenCalled();
     });
   });
 })
