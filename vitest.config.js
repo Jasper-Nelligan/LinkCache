@@ -15,6 +15,12 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       enabled: true,
+      exclude: [
+        'src/components/ui',
+        '**/*.js', // Exclude all JavaScript configuration files
+        '**/*.test.tsx', // Exclude all test files
+        '**/main.tsx'
+      ],
     },
     globals: true,
     environment: 'jsdom',
