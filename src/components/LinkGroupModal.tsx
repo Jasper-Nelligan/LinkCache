@@ -167,7 +167,7 @@ export default function LinkGroupModal(
               <div className="mt-4 mb-4">
                 {renderLinkPairs()}
               </div>
-              <Button className="mb-4" type="button" onClick={() => append({ name: "", url: "" })}>
+              <Button className="mb-4 bg-green-500" type="button" onClick={() => append({ name: "", url: "" })}>
                 Add Link
               </Button>
               <DialogFooter className="flex">
