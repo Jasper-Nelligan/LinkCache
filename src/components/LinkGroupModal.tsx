@@ -171,7 +171,7 @@ export default function LinkGroupModal(
                 Add Link
               </Button>
               <DialogFooter className="flex">
-                <Button type="submit" className={`w-[${isEditForm ? "70" : "100"}%]`}>
+                <Button type="submit" className="w-[100%]">
                   {isEditForm ? "Save Changes" : "Add Group"}
                 </Button>
                 {
