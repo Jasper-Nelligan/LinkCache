@@ -6,12 +6,14 @@ import LinkGroupModal from './components/LinkGroupModal';
 import { emptyLinkGroupInfo, initialLinkGroupInfo } from "./constants"
 import { addLinkGroupToLocalStorage, removeLinkGroupFromLocalStorage } from './utils';
 import { LinkGroupInfo } from './types';
+import Login from './components/Login';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [linkGroupInfoArray, setLinkGroupInfoArray] = useState<LinkGroupInfo[]>([]);
   const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(-1);
   const [nextId, setNextId] = useState<number>(-1);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     const linkGroupsInfo = JSON.parse(localStorage.getItem("linkGroups") || '[]');
@@ -60,9 +62,21 @@ export default function App() {
     }
   }
 
+  const onLoginClicked = () => {
+    setShowLogin(true);
+  }
+
+  const onSignInClicked = () => {
+    console.log("Sign in clicked");
+  }
+
+  const onCloseLogin = () => {
+    setShowLogin(false);
+  }
+
   return (
     <>
-      <Header />
+      <Header onLoginClicked={onLoginClicked} onSignInClicked={onSignInClicked}/>
       <LinkGroups linkGroupInfoArray={linkGroupInfoArray} onOpenModal={handleOpenModal} />
       <LinkGroupModal
         linkGroupInfo={linkGroupInfoArray.find(group => group.id === selectedLinkGroupId) ?? emptyLinkGroupInfo}
@@ -71,6 +85,7 @@ export default function App() {
         onFormSubmit={onModalSubmit}
         onDeleteGroup={handleDeleteGroup}
       />
+      <Login showLogin={showLogin} onClose={onCloseLogin} />
     </>
   );
 }
