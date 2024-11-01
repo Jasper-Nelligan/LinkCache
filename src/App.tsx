@@ -65,6 +65,7 @@ export default function App() {
   }
 
   const onLoginClicked = () => {
+    setShowRegister(false);
     setShowLogin(true);
   }
 
@@ -93,7 +94,7 @@ export default function App() {
         onDeleteGroup={handleDeleteGroup}
       />
       <Login showLogin={showLogin} onClose={onCloseLogin} onRegisterClicked={onRegisterClicked}/>
-      <Register showRegister={showRegister} onClose={onCloseRegister} />
+      <Register showRegister={showRegister} onClose={onCloseRegister} onLoginClicked={onLoginClicked}/>
     </>
   );
 }

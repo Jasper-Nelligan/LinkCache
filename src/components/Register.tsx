@@ -7,7 +7,8 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "./ui/input";
 import { useEffect } from "react";
 
-export default function Register({ showRegister, onClose }: { showRegister: boolean; onClose: () => void }) {
+export default function Register({ showRegister, onClose, onLoginClicked }:
+  { showRegister: boolean; onClose: () => void; onLoginClicked: () => void }) {
   const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8, "Password must be at least 8 characters long"),
@@ -93,7 +94,7 @@ export default function Register({ showRegister, onClose }: { showRegister: bool
                 </Button>
                 <div className="flex justify-center items-center mt-4">
                   <p>Already have an account?</p>
-                  <Button variant="link" type="button" onClick={onClose} className="p-1">
+                  <Button variant="link" type="button" onClick={onLoginClicked} className="p-1">
                     Login
                   </Button>
                 </div>
