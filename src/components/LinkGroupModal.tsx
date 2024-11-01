@@ -16,6 +16,7 @@ import { LinkGroupInfo } from "@/types";
 import { useEffect } from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 
+// TODO rename this to LinkGroupFormModal
 export default function LinkGroupModal(
   { linkGroupInfo, onClose, isModalOpen, onFormSubmit, onDeleteGroup }:
     {

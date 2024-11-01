@@ -15,7 +15,7 @@ export default function ColorOptions(
 
   const renderColorOptions = () => {
     return colors.map((color, index) => (
-      <Button className={`${selectedColor === color ? "border-2 border-bg-gray-300" : ""}`} type="button" variant="ghost" size="icon" onClick={() => setSelectedColor(color)} key={index}>
+      <Button data-testid={`${color}-btn`} className={`${selectedColor === color ? "border-2 border-bg-gray-300" : ""}`} type="button" variant="ghost" size="icon" onClick={() => setSelectedColor(color)} key={index}>
         <div style={{ backgroundColor: color }} className="rounded-full h-6 w-6" />
       </Button>
     ));
