@@ -47,15 +47,18 @@ export default function App() {
     if (linkGroupInfo.id === -1) {
       linkGroupInfo.id = nextId;
     }
+
     addLinkGroupToLocalStorage(linkGroupInfo);
+
+    // Check if the group already exists
     const existingIndex = linkGroupInfoArray.findIndex((group: LinkGroupInfo) => group.id === linkGroupInfo.id);
+    // If it exists, update it, otherwise add it
     if (existingIndex !== -1) {
       setLinkGroupInfoArray(linkGroupInfoArray.map((group: LinkGroupInfo) => group.id === linkGroupInfo.id ? linkGroupInfo : group));
     } else {
       setLinkGroupInfoArray([...linkGroupInfoArray, linkGroupInfo]);
     }
   }
-
 
   return (
     <>
