@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { LinkGroupInfo } from '@/types';
+import { SquarePen } from 'lucide-react';
 
 function LinkGroup({ linkGroupInfo, onOpenModal }: { linkGroupInfo: LinkGroupInfo, onOpenModal: (linkGroupId: number) => void }) {
   const getURLIconSrc = (url: string): string => {
@@ -15,11 +16,11 @@ function LinkGroup({ linkGroupInfo, onOpenModal }: { linkGroupInfo: LinkGroupInf
   ));
 
   return (
-    <div className="shadow rounded-lg overflow-hidden">
+    <div className="shadow rounded-lg overflow-hidden dark:border" style={{ borderColor: linkGroupInfo.color }}>
       <div style={{ backgroundColor: linkGroupInfo.color }} className="p-1 flex justify-between items-center">
         <div className="font-bold ml-2">{linkGroupInfo.linkGroupName}</div>
-        <Button variant="ghost" size="icon" onClick={() => onOpenModal(linkGroupInfo.id)}>
-          <img src="/edit_icon.png" alt="Edit link group" className="h-4 w-4" />
+        <Button variant="ghost" className="hover:bg-[rgba(0,0,0,0.1)] dark:hover:bg-[rgba(255,255,255,0.1)]" size="icon" onClick={() => onOpenModal(linkGroupInfo.id)}>
+          <SquarePen/>
         </Button>
       </div>
       <div className="flex flex-col gap-y-4 p-4">
