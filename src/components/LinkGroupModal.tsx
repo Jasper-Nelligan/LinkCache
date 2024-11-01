@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useFieldArray, useForm } from "react-hook-form"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import ColorOptions from "./colorOptions";
+import ColorOptions from "./ColorOptions";
 import { LinkGroupInfo } from "@/types";
 import { useEffect } from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
