@@ -69,6 +69,7 @@ export default function App() {
   }
 
   const onRegisterClicked = () => {
+    setShowLogin(false)
     setShowRegister(true);
   }
 
@@ -91,7 +92,7 @@ export default function App() {
         onFormSubmit={onModalSubmit}
         onDeleteGroup={handleDeleteGroup}
       />
-      <Login showLogin={showLogin} onClose={onCloseLogin} />
+      <Login showLogin={showLogin} onClose={onCloseLogin} onRegisterClicked={onRegisterClicked}/>
       <Register showRegister={showRegister} onClose={onCloseRegister} />
     </>
   );

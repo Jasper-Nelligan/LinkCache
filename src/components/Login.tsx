@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 
-export default function Login({ showLogin, onClose }: { showLogin: boolean; onClose: () => void }) {
+export default function Login({ showLogin, onClose, onRegisterClicked }:
+  { showLogin: boolean; onClose: () => void; onRegisterClicked: () => void }) {
   const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(1, "Password required"),
@@ -48,9 +49,9 @@ export default function Login({ showLogin, onClose }: { showLogin: boolean; onCl
                 <FormItem>
                   <div className="flex justify-between items-center">
                     <FormLabel htmlFor="password">Password</FormLabel>
-                    <a href="" className="underline text-sm">
-                      Forgot your password?
-                    </a>
+                    <Button variant="link" type="button" className="p-0">
+                      Forgot password?
+                    </Button>
                   </div>
                   <FormControl>
                     <Input id="password" type="password" {...field} />
@@ -71,9 +72,9 @@ export default function Login({ showLogin, onClose }: { showLogin: boolean; onCl
                 </Button>
                 <div className="flex justify-center items-center mt-4">
                   <p>Don't have an account?</p>
-                  <a href="" className="underline ml-1 text-sm">
+                  <Button variant="link" type="button" onClick={onRegisterClicked} className="p-1">
                     Register
-                  </a>
+                  </Button>
                 </div>
               </div>
             </DialogFooter>

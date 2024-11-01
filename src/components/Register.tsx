@@ -93,9 +93,9 @@ export default function Register({ showRegister, onClose }: { showRegister: bool
                 </Button>
                 <div className="flex justify-center items-center mt-4">
                   <p>Already have an account?</p>
-                  <a href="" className="underline ml-1 text-sm">
+                  <Button variant="link" type="button" onClick={onClose} className="p-1">
                     Login
-                  </a>
+                  </Button>
                 </div>
               </div>
             </DialogFooter>
