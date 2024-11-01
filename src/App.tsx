@@ -8,14 +8,15 @@ import { addLinkGroupToLocalStorage, removeLinkGroupFromLocalStorage } from './u
 import { LinkGroupInfo } from './types';
 import Login from './components/Login';
 import Register from './components/Register';
+import LoginRegister from './components/LoginRegister';
 
 export default function App() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLinkGroupFormOpen, setIsLinkGroupFormOpen] = useState(false);
   const [linkGroupInfoArray, setLinkGroupInfoArray] = useState<LinkGroupInfo[]>([]);
   const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(-1);
   const [nextId, setNextId] = useState<number>(-1);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
+  const [showLoginRegistrationDialog, setShowLoginRegistrationDialog] = useState(false);
+  const [shouldShowLoginForm, setShouldShowLoginForm] = useState(false);
 
   useEffect(() => {
     const linkGroupsInfo = JSON.parse(localStorage.getItem("linkGroups") || '[]');
@@ -33,13 +34,13 @@ export default function App() {
     setLinkGroupInfoArray(linkGroupsInfo);
   }, []);
 
-  const handleOpenModal = (linkGroupId: number) => {
+  const handleOpenLinkGroupForm = (linkGroupId: number) => {
     setSelectedLinkGroupId(linkGroupId);
-    setIsModalOpen(true);
+    setIsLinkGroupFormOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseLinkGroupForm = () => {
+    setIsLinkGroupFormOpen(false);
   };
   
   const handleDeleteGroup = (linkGroupId: number) => {
@@ -47,7 +48,7 @@ export default function App() {
     setLinkGroupInfoArray(linkGroupInfoArray.filter((group: LinkGroupInfo) => group.id !== linkGroupId));
   }
 
-  const onModalSubmit = (linkGroupInfo: LinkGroupInfo) => {
+  const onLinkGroupFormSubmit = (linkGroupInfo: LinkGroupInfo) => {
     if (linkGroupInfo.id === -1) {
       linkGroupInfo.id = nextId;
     }
@@ -64,37 +65,37 @@ export default function App() {
     }
   }
 
+  const onCloseLoginRegistration = () => {
+    setShowLoginRegistrationDialog(false);
+  }
+  
   const onLoginClicked = () => {
-    setShowRegister(false);
-    setShowLogin(true);
+    setShouldShowLoginForm(true);
+    setShowLoginRegistrationDialog(true);
   }
-
+  
   const onRegisterClicked = () => {
-    setShowLogin(false)
-    setShowRegister(true);
-  }
-
-  const onCloseLogin = () => {
-    setShowLogin(false);
-  }
-
-  const onCloseRegister = () => {
-    setShowRegister(false);
+    setShouldShowLoginForm(false);
+    setShowLoginRegistrationDialog(true);
   }
 
   return (
     <>
       <Header onLoginClicked={onLoginClicked} onRegisterClicked={onRegisterClicked}/>
-      <LinkGroups linkGroupInfoArray={linkGroupInfoArray} onOpenModal={handleOpenModal} />
+      <LinkGroups linkGroupInfoArray={linkGroupInfoArray} onOpenModal={handleOpenLinkGroupForm} />
       <LinkGroupModal
         linkGroupInfo={linkGroupInfoArray.find(group => group.id === selectedLinkGroupId) ?? emptyLinkGroupInfo}
-        onClose={handleCloseModal}
-        isModalOpen={isModalOpen}
-        onFormSubmit={onModalSubmit}
+        onClose={handleCloseLinkGroupForm}
+        isModalOpen={isLinkGroupFormOpen}
+        onFormSubmit={onLinkGroupFormSubmit}
         onDeleteGroup={handleDeleteGroup}
       />
-      <Login showLogin={showLogin} onClose={onCloseLogin} onRegisterClicked={onRegisterClicked}/>
-      <Register showRegister={showRegister} onClose={onCloseRegister} onLoginClicked={onLoginClicked}/>
+      <LoginRegister
+        isOpen={showLoginRegistrationDialog}
+        onClose={onCloseLoginRegistration}
+        shouldShowLoginForm={shouldShowLoginForm}
+        setShouldShowLoginForm={setShouldShowLoginForm}
+      />
     </>
   );
 }
