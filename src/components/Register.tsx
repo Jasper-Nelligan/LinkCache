@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "./ui/input";
 import { useEffect } from "react";
 
-export default function SignUp({ showSignUp, onClose }: { showSignUp: boolean; onClose: () => void }) {
+export default function Register({ showRegister, onClose }: { showRegister: boolean; onClose: () => void }) {
   const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8, "Password must be at least 8 characters long"),
@@ -32,13 +32,13 @@ export default function SignUp({ showSignUp, onClose }: { showSignUp: boolean; o
       password: "",
       confirmPassword: "",
     });
-  }, [showSignUp]);
+  }, [showRegister]);
 
   // TODO rename to register
   return (
-    <Dialog open={showSignUp} onOpenChange={onClose}>
+    <Dialog open={showRegister} onOpenChange={onClose}>
       <DialogContent className="max-w-[50vh]">
-        <DialogTitle>Sign Up</DialogTitle>
+        <DialogTitle>Register</DialogTitle>
         <DialogDescription>Register an account to save your links across devices</DialogDescription>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(data => console.log(data))} className="space-y-2">

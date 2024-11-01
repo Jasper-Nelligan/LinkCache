@@ -7,7 +7,7 @@ import { emptyLinkGroupInfo, initialLinkGroupInfo } from "./constants"
 import { addLinkGroupToLocalStorage, removeLinkGroupFromLocalStorage } from './utils';
 import { LinkGroupInfo } from './types';
 import Login from './components/Login';
-import SignUp from './components/SignUp';
+import Register from './components/Register';
 
 export default function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +15,7 @@ export default function App() {
   const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(-1);
   const [nextId, setNextId] = useState<number>(-1);
   const [showLogin, setShowLogin] = useState(false);
-  const [showSignUp, setShowSignUp] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   useEffect(() => {
     const linkGroupsInfo = JSON.parse(localStorage.getItem("linkGroups") || '[]');
@@ -68,21 +68,21 @@ export default function App() {
     setShowLogin(true);
   }
 
-  const onSignUpClicked = () => {
-    setShowSignUp(true);
+  const onRegisterClicked = () => {
+    setShowRegister(true);
   }
 
   const onCloseLogin = () => {
     setShowLogin(false);
   }
 
-  const onCloseSignUp = () => {
-    setShowSignUp(false);
+  const onCloseRegister = () => {
+    setShowRegister(false);
   }
 
   return (
     <>
-      <Header onLoginClicked={onLoginClicked} onSignUpClicked={onSignUpClicked}/>
+      <Header onLoginClicked={onLoginClicked} onRegisterClicked={onRegisterClicked}/>
       <LinkGroups linkGroupInfoArray={linkGroupInfoArray} onOpenModal={handleOpenModal} />
       <LinkGroupModal
         linkGroupInfo={linkGroupInfoArray.find(group => group.id === selectedLinkGroupId) ?? emptyLinkGroupInfo}
@@ -92,7 +92,7 @@ export default function App() {
         onDeleteGroup={handleDeleteGroup}
       />
       <Login showLogin={showLogin} onClose={onCloseLogin} />
-      <SignUp showSignUp={showSignUp} onClose={onCloseSignUp} />
+      <Register showRegister={showRegister} onClose={onCloseRegister} />
     </>
   );
 }

@@ -13,7 +13,6 @@ export default function Login({ showLogin, onClose }: { showLogin: boolean; onCl
     password: z.string().min(8),
   });
 
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -59,7 +58,7 @@ export default function Login({ showLogin, onClose }: { showLogin: boolean; onCl
             <div className="flex justify-center items-center mt-4">
               <p>Don't have an account?</p>
               <a href="" className="underline ml-1 text-sm">
-                Sign up
+                Register
               </a>
             </div>
           </div>

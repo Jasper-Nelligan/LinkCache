@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from './providers/theme-provider'
 
-export default function Header({ onLoginClicked, onSignUpClicked }: { onLoginClicked: () => void, onSignUpClicked: () => void }) {
+export default function Header({ onLoginClicked, onRegisterClicked }: { onLoginClicked: () => void, onRegisterClicked: () => void }) {
   const { theme, setTheme } = useTheme()
 
   const handleThemeChange = () => {
@@ -25,7 +25,7 @@ export default function Header({ onLoginClicked, onSignUpClicked }: { onLoginCli
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
         </Button>
         <Button variant="ghost" onClick={onLoginClicked}>Login</Button>
-        <Button variant="outline" onClick={onSignUpClicked}>Sign up</Button>
+        <Button variant="outline" onClick={onRegisterClicked}>Register</Button>
       </div>
     </header>
   )
