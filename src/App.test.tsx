@@ -79,6 +79,7 @@ describe('App Component', () => {
 
     fireEvent.click(screen.getByTestId('new-link-group-btn'));
 
+    // TODO use getByLabelText
     const groupNameInput = screen.getByTestId("group-name-input");
     fireEvent.change(groupNameInput, { target: { value: "Group Name 1" } });
 
@@ -120,6 +121,7 @@ describe('App Component', () => {
 
     fireEvent.click(screen.getByAltText('Edit link group'));
 
+    // TODO use getByLabelText
     const groupNameInput = screen.getByTestId("group-name-input");
     fireEvent.change(groupNameInput, { target: { value: "New Group Name" } });
 
