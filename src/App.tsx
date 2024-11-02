@@ -6,8 +6,6 @@ import LinkGroupModal from './components/LinkGroupModal';
 import { emptyLinkGroupInfo, initialLinkGroupInfo } from "./constants"
 import { addLinkGroupToLocalStorage, removeLinkGroupFromLocalStorage } from './utils';
 import { LinkGroupInfo, credentialDetails } from './types';
-import Login from './components/Login';
-import Register from './components/Register';
 import LoginRegister from './components/LoginRegister';
 
 export default function App() {
