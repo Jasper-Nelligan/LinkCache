@@ -9,3 +9,9 @@ export type LinkGroupInfo = {
   color: string;
   linkPairs: LinkPair[];
 }
+
+export type credentialDetails = {
+  email: string;
+  password: string;
+  type: "login" | "register";
+}

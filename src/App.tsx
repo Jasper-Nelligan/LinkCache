@@ -5,7 +5,7 @@ import LinkGroups from "./LinkGroups";
 import LinkGroupModal from './components/LinkGroupModal';
 import { emptyLinkGroupInfo, initialLinkGroupInfo } from "./constants"
 import { addLinkGroupToLocalStorage, removeLinkGroupFromLocalStorage } from './utils';
-import { LinkGroupInfo } from './types';
+import { LinkGroupInfo, credentialDetails } from './types';
 import Login from './components/Login';
 import Register from './components/Register';
 import LoginRegister from './components/LoginRegister';
@@ -16,7 +16,7 @@ export default function App() {
   const [selectedLinkGroupId, setSelectedLinkGroupId] = useState<number>(-1);
   const [nextId, setNextId] = useState<number>(-1);
   const [showLoginRegistrationDialog, setShowLoginRegistrationDialog] = useState(false);
-  const [shouldShowLoginForm, setShouldShowLoginForm] = useState(false);
+  const [showLoginForm, setShowLoginForm] = useState(false);
 
   useEffect(() => {
     const linkGroupsInfo = JSON.parse(localStorage.getItem("linkGroups") || '[]');
@@ -70,13 +70,23 @@ export default function App() {
   }
   
   const onLoginClicked = () => {
-    setShouldShowLoginForm(true);
+    setShowLoginForm(true);
     setShowLoginRegistrationDialog(true);
   }
   
   const onRegisterClicked = () => {
-    setShouldShowLoginForm(false);
+    setShowLoginForm(false);
     setShowLoginRegistrationDialog(true);
+  }
+
+  const onLoginRegisterFormSubmit = (credentials: credentialDetails) => {
+    console.log(credentials);
+    if (credentials.type === "login") {
+      console.log("Login");
+    }
+    else {
+      console.log("Register");
+    }
   }
 
   return (
@@ -93,8 +103,9 @@ export default function App() {
       <LoginRegister
         isOpen={showLoginRegistrationDialog}
         onClose={onCloseLoginRegistration}
-        shouldShowLoginForm={shouldShowLoginForm}
-        setShouldShowLoginForm={setShouldShowLoginForm}
+        showLoginForm={showLoginForm}
+        setShowLoginForm={setShowLoginForm}
+        onSubmitForm={onLoginRegisterFormSubmit}
       />
     </>
   );

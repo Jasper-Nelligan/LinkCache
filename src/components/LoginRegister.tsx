@@ -5,10 +5,18 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } f
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
+import { credentialDetails } from "@/types";
 import { useEffect } from "react";
 
-export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, setShouldShowLoginForm }:
-  { isOpen: boolean; shouldShowLoginForm: boolean; onClose: () => void; setShouldShowLoginForm: (shouldShowLoginForm: boolean) => void }) {
+// TODO prevent copy/paste into the confirm password field
+export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm, onClose, onSubmitForm }:
+  {
+    isOpen: boolean;
+    showLoginForm: boolean;
+    onClose: () => void;
+    setShowLoginForm: (showLoginForm: boolean) => void;
+    onSubmitForm: (data: credentialDetails) => void;
+  }) {
 
   const registrationFormSchema = z.object({
     email: z.string().email(),
@@ -42,21 +50,35 @@ export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, se
   });
 
   useEffect(() => {
-    if (shouldShowLoginForm) {
-      loginForm.reset({
-        email: "",
-        password: "",
-      });
-    }
-    else {
-      registrationForm.reset({
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
-    }
+    resetForm();
+  }, [showLoginForm]);
 
-  }, [isOpen, shouldShowLoginForm]);
+  const handleSubmit = (data: any) => {
+    const { confirmPassword, ...formData } = data;
+    const type = showLoginForm ? "login" : "register";
+    onSubmitForm({ ...formData, type });
+    resetForm();
+    onClose();
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  }
+
+  const resetForm = () => {
+    // Use setValue to reset the form fields, as reset() causes the form to become unresponsive
+    if (showLoginForm) {
+      loginForm.setValue("email","")
+      loginForm.setValue("password","")
+      loginForm.clearErrors();
+    } else {
+      registrationForm.setValue("email","")
+      registrationForm.setValue("password","")
+      registrationForm.setValue("confirmPassword","")
+      registrationForm.clearErrors();
+    }
+  }
 
   const renderRegistrationForm = () => {
     return (
@@ -64,7 +86,7 @@ export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, se
         <DialogTitle>Register</DialogTitle>
         <DialogDescription>Register an account to save your links across devices</DialogDescription>
         <Form {...registrationForm}>
-          <form onSubmit={registrationForm.handleSubmit(data => console.log(data))} className="space-y-2">
+          <form onSubmit={registrationForm.handleSubmit(handleSubmit)} className="space-y-2">
             <FormField
               control={registrationForm.control}
               name="email"
@@ -72,7 +94,7 @@ export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, se
                 <FormItem>
                   <FormLabel htmlFor="email">Email</FormLabel>
                   <FormControl>
-                    <Input id="email" type="email" {...field} />
+                    <Input id="email" type="email" {...field} defaultValue={loginForm.getValues("email")} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -116,7 +138,7 @@ export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, se
                 </Button>
                 <div className="flex justify-center items-center mt-4">
                   <p>Already have an account?</p>
-                  <Button variant="link" type="button" onClick={() => setShouldShowLoginForm(true)} className="p-1">
+                  <Button variant="link" type="button" onClick={() => setShowLoginForm(true)} className="p-1">
                     Login
                   </Button>
                 </div>
@@ -134,7 +156,7 @@ export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, se
         <DialogTitle>Login</DialogTitle>
         <DialogDescription>Enter your email below to login to your account</DialogDescription>
         <Form {...loginForm}>
-          <form onSubmit={loginForm.handleSubmit(data => console.log(data))} className="space-y-5">
+          <form onSubmit={loginForm.handleSubmit(handleSubmit)} className="space-y-5">
             <FormField
               control={loginForm.control}
               name="email"
@@ -178,7 +200,7 @@ export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, se
                 </Button>
                 <div className="flex justify-center items-center mt-4">
                   <p>Don't have an account?</p>
-                  <Button variant="link" type="button" onClick={() => setShouldShowLoginForm(false)} className="p-1">
+                  <Button variant="link" type="button" onClick={() => setShowLoginForm(false)} className="p-1">
                     Register
                   </Button>
                 </div>
@@ -191,8 +213,8 @@ export default function LoginRegister({ isOpen, shouldShowLoginForm, onClose, se
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      {shouldShowLoginForm ? renderLoginForm() : renderRegistrationForm()}
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      {showLoginForm ? renderLoginForm() : renderRegistrationForm()}
     </Dialog>
   )
 }
