@@ -8,6 +8,8 @@ function LinkGroup({ linkGroupInfo, onOpenModal }: { linkGroupInfo: LinkGroupInf
     return `https://icons.duckduckgo.com/ip2/${strippedURL}.ico`;
   };
 
+  console.log(linkGroupInfo)
+
   const renderLinks = linkGroupInfo.linkPairs.map((linkInfo, index) => (
     <div className="flex items-center" key={index}>
       <img src={getURLIconSrc(linkInfo.url)} alt={linkInfo.name} className="h-6 w-6" />

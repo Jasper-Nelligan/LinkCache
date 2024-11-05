@@ -5,18 +5,21 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } f
 import { Button } from "./ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "./ui/form";
 import { Input } from "./ui/input";
-import { credentialDetails } from "@/types";
-import { useEffect } from "react";
+import { credentialDetails, registrationDetails } from "@/types";
+import { useEffect, useState } from "react";
+import { addUser, loginUser } from "@/backend";
+import { useAuth } from "@/providers/authProvider";
 
+// TODO login works when database is down for some reason, fix this
 // TODO prevent copy/paste into the confirm password field
-export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm, onClose, onSubmitForm }:
+export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm, onClose }:
   {
     isOpen: boolean;
     showLoginForm: boolean;
     onClose: () => void;
     setShowLoginForm: (showLoginForm: boolean) => void;
-    onSubmitForm: (data: credentialDetails) => void;
   }) {
+  const { login } = useAuth();
 
   const registrationFormSchema = z.object({
     email: z.string().email(),
@@ -53,10 +56,40 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
     resetForm();
   }, [showLoginForm]);
 
-  const handleSubmit = (data: any) => {
+  const handleRegistrationSubmit = async (data: registrationDetails) => {
     const { confirmPassword, ...formData } = data;
-    const type = showLoginForm ? "login" : "register";
-    onSubmitForm({ ...formData, type });
+
+    const response = await addUser(formData);
+    if (response === 409) {
+      registrationForm.setError("email", {
+        type: "manual",
+        message: "An account with this email already exists",
+      });
+      return;
+    }
+
+    login();
+    resetForm();
+    onClose();
+  };
+
+  const handleLoginSubmit = async (data: credentialDetails) => {
+    // Call the backend function to login
+    const response = await loginUser(data);
+
+    if (response === 401) {
+      loginForm.setError("email", {
+        type: "manual",
+        message: "Invalid email or password",
+      });
+      loginForm.setError("password", {
+        type: "manual",
+        message: "Invalid email or password",
+      });
+      return;
+    }
+
+    login();
     resetForm();
     onClose();
   };
@@ -69,13 +102,13 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
   const resetForm = () => {
     // Use setValue to reset the form fields, as reset() causes the form to become unresponsive
     if (showLoginForm) {
-      loginForm.setValue("email","")
-      loginForm.setValue("password","")
+      loginForm.setValue("email", "")
+      loginForm.setValue("password", "")
       loginForm.clearErrors();
     } else {
-      registrationForm.setValue("email","")
-      registrationForm.setValue("password","")
-      registrationForm.setValue("confirmPassword","")
+      registrationForm.setValue("email", "")
+      registrationForm.setValue("password", "")
+      registrationForm.setValue("confirmPassword", "")
       registrationForm.clearErrors();
     }
   }
@@ -86,7 +119,7 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
         <DialogTitle>Register</DialogTitle>
         <DialogDescription>Register an account to save your links across devices</DialogDescription>
         <Form {...registrationForm}>
-          <form onSubmit={registrationForm.handleSubmit(handleSubmit)} className="space-y-2">
+          <form onSubmit={registrationForm.handleSubmit(handleRegistrationSubmit)} className="space-y-2">
             <FormField
               control={registrationForm.control}
               name="email"
@@ -94,7 +127,7 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
                 <FormItem>
                   <FormLabel htmlFor="email">Email</FormLabel>
                   <FormControl>
-                    <Input id="email" type="email" {...field} defaultValue={loginForm.getValues("email")} />
+                    <Input id="email" type="email" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -156,7 +189,7 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
         <DialogTitle>Login</DialogTitle>
         <DialogDescription>Enter your email below to login to your account</DialogDescription>
         <Form {...loginForm}>
-          <form onSubmit={loginForm.handleSubmit(handleSubmit)} className="space-y-5">
+          <form onSubmit={loginForm.handleSubmit(handleLoginSubmit)} className="space-y-5">
             <FormField
               control={loginForm.control}
               name="email"

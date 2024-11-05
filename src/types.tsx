@@ -13,5 +13,10 @@ export type LinkGroupInfo = {
 export type credentialDetails = {
   email: string;
   password: string;
-  type: "login" | "register";
+}
+
+export type registrationDetails = {
+  email: string;
+  password: string;
+  confirmPassword: string;
 }

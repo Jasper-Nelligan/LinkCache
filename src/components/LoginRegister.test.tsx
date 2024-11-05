@@ -1,27 +1,41 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import LoginRegister from './LoginRegister';
+import { renderWithProviders } from '@/test-utils';
+import * as backend from "@/backend";
+import { beforeEach } from 'node:test';
+import * as auth from '../providers/authProvider';
 
 describe("LoginRegister", () => {
+  beforeEach(() => {
+    vi.spyOn(auth, "useAuth").mockReturnValue({
+      isAuthenticated: false,
+      login: vi.fn(),
+      logout: vi.fn(),
+    });
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+  
   it("should render login form", () => {
-    render(<LoginRegister
+    renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={true}
       onClose={vi.fn()}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     expect(screen.getByText("Enter your email below to login to your account")).toBeTruthy();
   });
 
   it("should render registration form", () => {
-    render(<LoginRegister
+    renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={false}
       onClose={vi.fn()}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     expect(screen.getByText("Register an account to save your links across devices")).toBeTruthy();
@@ -29,12 +43,11 @@ describe("LoginRegister", () => {
 
   it("switching between forms should reset form fields", () => {
     const setShowLoginForm = vi.fn();
-    const { rerender } = render(<LoginRegister
+    const { rerender } = renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={true}
       onClose={vi.fn()}
       setShowLoginForm={setShowLoginForm}
-      onSubmitForm={vi.fn()}
     />);
 
     // Simulate entering values into the login form fields
@@ -50,7 +63,6 @@ describe("LoginRegister", () => {
       showLoginForm={false}
       onClose={vi.fn()}
       setShowLoginForm={setShowLoginForm}
-      onSubmitForm={vi.fn()}
     />);
 
     fireEvent.change(screen.getByLabelText("Email"), { target: { value: 'test@example.com' } });
@@ -66,7 +78,6 @@ describe("LoginRegister", () => {
       showLoginForm={true}
       onClose={vi.fn()}
       setShowLoginForm={setShowLoginForm}
-      onSubmitForm={vi.fn()}
     />);
 
     // Check that the login form fields are reset
@@ -79,7 +90,6 @@ describe("LoginRegister", () => {
       showLoginForm={false}
       onClose={vi.fn()}
       setShowLoginForm={setShowLoginForm}
-      onSubmitForm={vi.fn()}
     />);
 
     // Check that the registration form fields are reset
@@ -90,12 +100,11 @@ describe("LoginRegister", () => {
 
   it("should close the dialog when close is clicked", () => {
     const onClose = vi.fn();
-    render(<LoginRegister
+    renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={true}
       onClose={onClose}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     fireEvent.click(screen.getByText("Close"));
@@ -103,65 +112,13 @@ describe("LoginRegister", () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it("should call onSubmit handler when login form is submitted", async () => {
-    const onClose = vi.fn();
-    const onSubmitForm = vi.fn();
-    render(<LoginRegister
-      isOpen={true}
-      showLoginForm={true}
-      onClose={onClose}
-      setShowLoginForm={vi.fn()}
-      onSubmitForm={onSubmitForm}
-    />);
-
-    fireEvent.input(screen.getByLabelText("Email"), { target: { value: "test@email.com" } });
-    fireEvent.input(screen.getByLabelText("Password"), { target: { value: "testtest" } });
-    fireEvent.click(screen.getByRole("button", { name: "Login" }));
-
-    await waitFor(() => {
-      expect(onSubmitForm).toHaveBeenCalledWith({
-        email: "test@email.com",
-        password: "testtest",
-        type: "login"
-      });
-      expect(onClose).toHaveBeenCalled();
-    });
-  });
-
-  it("should call onSubmit handler when registration form is submitted", async () => {
-    const onClose = vi.fn();
-    const onSubmitForm = vi.fn();
-    render(<LoginRegister
-      isOpen={true}
-      showLoginForm={false}
-      onClose={onClose}
-      setShowLoginForm={vi.fn()}
-      onSubmitForm={onSubmitForm}
-    />);
-
-    fireEvent.input(screen.getByLabelText("Email"), { target: { value: "test@email.com" } });
-    fireEvent.input(screen.getByLabelText("Password"), { target: { value: "testtest" } });
-    fireEvent.input(screen.getByLabelText("Confirm Password"), { target: { value: "testtest" } });
-    fireEvent.click(screen.getByRole("button", { name: "Register" }));
-
-    await waitFor(() => {
-      expect(onSubmitForm).toHaveBeenCalledWith({
-        email: "test@email.com",
-        password: "testtest",
-        type: "register"
-      });
-      expect(onClose).toHaveBeenCalled();
-    });
-  });
-
   it("should reset login form when dialog is closed", () => {
     const onClose = vi.fn();
-    const { rerender } = render(<LoginRegister
+    const { rerender } = renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={true}
       onClose={onClose}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     fireEvent.input(screen.getByLabelText("Email"), { target: { value: "test" } });
@@ -173,7 +130,6 @@ describe("LoginRegister", () => {
       showLoginForm={true}
       onClose={onClose}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     expect(onClose).toHaveBeenCalled();
@@ -183,12 +139,11 @@ describe("LoginRegister", () => {
 
   it("should reset registration form when dialog is closed", () => {
     const onClose = vi.fn();
-    const { rerender } = render(<LoginRegister
+    const { rerender } = renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={false}
       onClose={onClose}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     fireEvent.input(screen.getByLabelText("Email"), { target: { value: "test" } });
@@ -201,7 +156,6 @@ describe("LoginRegister", () => {
       showLoginForm={false}
       onClose={onClose}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     expect(onClose).toHaveBeenCalled();
@@ -210,13 +164,12 @@ describe("LoginRegister", () => {
     expect((screen.getByLabelText("Confirm Password") as HTMLInputElement).value).toEqual("");
   });
 
-  it("shoud show error messages when login form contains empty fields on submit", async () => {
-    render(<LoginRegister
+  it("should show error messages when login form contains empty fields on submit", async () => {
+    renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={true}
       onClose={vi.fn()}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     fireEvent.click(screen.getByRole("button", { name: "Login" }));
@@ -227,13 +180,12 @@ describe("LoginRegister", () => {
     });
   });
 
-  it("shoud show error messages when resgistration form contains empty fields on submit", async () => {
-    render(<LoginRegister
+  it("should show error messages when resgistration form contains empty fields on submit", async () => {
+    renderWithProviders(<LoginRegister
       isOpen={true}
       showLoginForm={false}
       onClose={vi.fn()}
       setShowLoginForm={vi.fn()}
-      onSubmitForm={vi.fn()}
     />);
 
     fireEvent.click(screen.getByRole("button", { name: "Register" }));
@@ -241,6 +193,80 @@ describe("LoginRegister", () => {
     await waitFor(() => {
       expect(screen.getByText("Invalid email")).toBeTruthy();
       expect(screen.getByText("Password must be at least 8 characters long")).toBeTruthy();
+    });
+  });
+
+  it("should show error message when passwords don't match", async () => {
+    renderWithProviders(<LoginRegister
+      isOpen={true}
+      showLoginForm={false}
+      onClose={vi.fn()}
+      setShowLoginForm={vi.fn()}
+    />);
+
+    fireEvent.input(screen.getByLabelText("Email"), { target: { value: "  " } }); 
+    fireEvent.input(screen.getByLabelText("Password"), { target: { value: "password" } });
+    fireEvent.input(screen.getByLabelText("Confirm Password"), { target: { value: "password1" } });
+    fireEvent.click(screen.getByRole("button", { name: "Register" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Passwords don't match")).toBeTruthy();
+    });
+  });
+
+  it("should show error message when password is less than 8 characters", async () => {
+    renderWithProviders(<LoginRegister
+      isOpen={true}
+      showLoginForm={false}
+      onClose={vi.fn()}
+      setShowLoginForm={vi.fn()}
+    />);
+
+    fireEvent.input(screen.getByLabelText("Email"), { target: { value: "test@email.com" } }); 
+    fireEvent.input(screen.getByLabelText("Password"), { target: { value: "pass" } });
+    fireEvent.click(screen.getByRole("button", { name: "Register" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("Password must be at least 8 characters long")).toBeTruthy();
+    });
+  });
+
+  it("should show error message when account or password is wrong", async () => {
+    renderWithProviders(<LoginRegister
+      isOpen={true}
+      showLoginForm={true}
+      onClose={vi.fn()}
+      setShowLoginForm={vi.fn()}
+    />);
+
+    vi.spyOn(backend, 'loginUser').mockResolvedValue(401);
+
+    fireEvent.input(screen.getByLabelText("Email"), { target: { value: "test@email.com" } }); 
+    fireEvent.input(screen.getByLabelText("Password"), { target: { value: "password" } });
+    fireEvent.click(screen.getByRole("button", { name: "Login" }));
+
+    await waitFor(() => {
+      expect(screen.getAllByText("Invalid email or password")).toHaveLength(2);
+    });
+  });
+
+  it("should show error message when account already exists", async () => {
+    renderWithProviders(<LoginRegister
+      isOpen={true}
+      showLoginForm={false}
+      onClose={vi.fn()}
+      setShowLoginForm={vi.fn()}
+    />);
+
+    vi.spyOn(backend, 'addUser').mockResolvedValue(409);
+
+    fireEvent.input(screen.getByLabelText("Email"), { target: { value: "test@email.com" } }); 
+    fireEvent.input(screen.getByLabelText("Password"), { target: { value: "password" } });
+    fireEvent.input(screen.getByLabelText("Confirm Password"), { target: { value: "password" } });
+    fireEvent.click(screen.getByRole("button", { name: "Register" }));
+
+    await waitFor(() => {
+      expect(screen.getByText("An account with this email already exists")).toBeTruthy();
     });
   });
 });
