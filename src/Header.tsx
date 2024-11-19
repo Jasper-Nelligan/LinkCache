@@ -2,10 +2,25 @@ import { Button } from '@/components/ui/button'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from './providers/theme-provider'
 import { useAuth } from './providers/authProvider';
+import { useEffect, useState } from 'react';
+import { getUserEmail } from './backend';
 
 export default function Header({ onLoginClicked, onRegisterClicked }: { onLoginClicked: () => void, onRegisterClicked: () => void }) {
   const { theme, setTheme } = useTheme()
-  const { isAuthenticated, login, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
+  const [ userName, setUserName ] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchUserEmailFromBackend = async () => {
+      if (isAuthenticated) {
+        const email = await getUserEmail();
+        const username = email.split('@')[0];
+        setUserName(username);
+      }
+    }
+
+    fetchUserEmailFromBackend();
+  }, [isAuthenticated])
 
   const handleThemeChange = () => {
     if (theme === "light") setTheme("dark")
@@ -22,8 +37,8 @@ export default function Header({ onLoginClicked, onRegisterClicked }: { onLoginC
         </div>
       </div>
       {isAuthenticated && (
-        <div className="flex space-x-4 mr-4">
-          <p>Welcome, Jasper!</p>
+        <div className="flex justify-center items-center">
+          <p>Welcome, {userName}!</p>
           <Button variant="ghost" onClick={logout}>Logout</Button>
         </div>
       )}

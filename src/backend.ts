@@ -63,3 +63,13 @@ export async function addLinkGroupToDatabase(linkGroupInfoArray: LinkGroupInfo[]
     console.log('An error occurred:', error);
   }
 }
+
+export async function getUserEmail(): Promise<string> {
+  try {
+    const response = await axios.get('http://localhost:3000/user_email', { withCredentials: true });
+    return response.data.email;
+  } catch (error) {
+    console.log('An error occurred:', error);
+    throw new Error('Failed to fetch user email');
+  }
+}
