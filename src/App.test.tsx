@@ -53,11 +53,10 @@ describe('App Component', () => {
     });
   })
 
-  // TODO fix this test once tooltip is added
-  it.skip('renders LinkGroupModal for existing group', async () => {
+  it('renders LinkGroupModal for existing group', async () => {
     renderWithProviders(<App />);
 
-    fireEvent.click(screen.getByAltText('Edit link group'));
+    fireEvent.click(screen.getAllByTestId('edit-link-group-btn')[0]);
 
     await waitFor(() => {
       expect(screen.getAllByText("Edit Group")).toHaveLength(2);
@@ -127,11 +126,10 @@ describe('App Component', () => {
     });
   });
 
-  // TODO fix this test once tooltip is added
-  it.skip("edit existing group", async () => {
+  it("edit existing group", async () => {
     renderWithProviders(<App />);
 
-    fireEvent.click(screen.getByAltText('Edit link group'));
+    fireEvent.click(screen.getAllByTestId('edit-link-group-btn')[0]);
 
     // TODO use getByLabelText
     const groupNameInput = screen.getByTestId("group-name-input");
@@ -149,13 +147,12 @@ describe('App Component', () => {
     });
   });
 
-  // TODO fix this test once tooltip is added
-  it.skip("delete existing group", () => {
+  it("delete existing group", () => {
     renderWithProviders(<App />);
 
-    fireEvent.click(screen.getByAltText('Edit link group'));
+    fireEvent.click(screen.getAllByTestId('edit-link-group-btn')[0]);
+    
     const deleteGroupBtn = screen.getByText("Delete Group");
-
     fireEvent.click(deleteGroupBtn);
 
     // Check local storage
