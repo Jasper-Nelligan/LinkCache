@@ -210,13 +210,13 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
                 <FormItem>
                   <div className="flex justify-between items-center">
                     <FormLabel htmlFor="password">Password</FormLabel>
-                    <Button variant="link" type="button" className="p-0">
-                      Forgot password?
-                    </Button>
                   </div>
                   <FormControl>
                     <Input id="password" type="password" {...field} />
                   </FormControl>
+                  <Button variant="link" type="button" className="p-0">
+                    Forgot password?
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
