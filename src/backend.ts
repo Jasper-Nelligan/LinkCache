@@ -5,35 +5,16 @@ export async function addUser(credentials: credentialDetails) {
   try {
     await axios.post('http://localhost:3000/register', { email: credentials.email, password: credentials.password }, { withCredentials: true });
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 409) {
-        return error.response.status;
-      } else if (error.response?.status === 500) {
-        console.log('Internal server error');
-      } else {
-        console.log('An unexpected error occurred:', error.message);
-      }
-    } else {
-      console.log('An unknown error occurred');
-    }
+    return handleError(error);
   }
 }
 
 export async function loginUser(credentials: credentialDetails) {
+  console.log("Logging in with credentials:", credentials);
   try {
     await axios.post('http://localhost:3000/login', { email: credentials.email, password: credentials.password }, { withCredentials: true });
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      if (error.response?.status === 401) {
-        return error.response.status;
-      } else if (error.response?.status === 500) {
-        console.log('Internal server error');
-      } else {
-        console.log('An unexpected error occurred:', error.message);
-      }
-    } else {
-      console.log('An unknown error occurred');
-    }
+    return handleError(error);
   }
 }
 
@@ -71,5 +52,19 @@ export async function getUserEmail(): Promise<string> {
   } catch (error) {
     console.log('An error occurred:', error);
     throw new Error('Failed to fetch user email');
+  }
+}
+
+function handleError(error: any) {
+  if (axios.isAxiosError(error)) {
+    if (error.response?.status) {
+      return error.response.status;
+    } else {
+      console.error('An unknown error occurred', error);
+      return 500;
+    }
+  } else {
+    console.error('An unknown error occurred', error);
+    return 500;
   }
 }

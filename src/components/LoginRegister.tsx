@@ -20,6 +20,8 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
     setShowLoginForm: (showLoginForm: boolean) => void;
   }) {
   const { login } = useAuth();
+  const [ generalLoginError, setGeneralLoginError ] = useState<string | null>(null);
+  const [ generalRegistrationError, setGeneralRegistrationError ] = useState<string | null>(null);
 
   const registrationFormSchema = z.object({
     email: z.string().email(),
@@ -66,6 +68,9 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
         message: "An account with this email already exists",
       });
       return;
+    } else if (response === 500 || response === 503) {
+      setGeneralRegistrationError("An error occurred, please try again later");
+      return;
     }
 
     login();
@@ -75,20 +80,25 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
 
   const handleLoginSubmit = async (data: credentialDetails) => {
     // Call the backend function to login
-    const response = await loginUser(data);
+    const error = await loginUser(data);
 
-    if (response === 401) {
-      loginForm.setError("email", {
-        type: "manual",
-        message: "Invalid email or password",
-      });
-      loginForm.setError("password", {
-        type: "manual",
-        message: "Invalid email or password",
-      });
-      return;
+    if (error) {
+      if (error === 401) {
+        loginForm.setError("email", {
+          type: "manual",
+          message: "Invalid email or password",
+        });
+        loginForm.setError("password", {
+          type: "manual",
+          message: "Invalid email or password",
+        });
+        return;
+      } else {
+        setGeneralLoginError("An error occurred, please try again later");
+        return;
+      }
     }
-
+    
     login();
     resetForm();
     onClose();
@@ -159,6 +169,9 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
                 </FormItem>
               )}
             />
+            {generalRegistrationError && (
+              <p className="text-red-500">{generalRegistrationError}</p>
+            )}
             <DialogFooter>
               <div className="flex flex-col justify-between items-center w-full mt-5">
                 <Button className="w-full" type="submit">Register</Button>
@@ -221,6 +234,9 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
                 </FormItem>
               )}
             />
+            {generalLoginError && (
+              <p className="text-red-500">{generalLoginError}</p>
+            )}
             <DialogFooter>
               <div className="flex flex-col justify-between items-center w-full mt-5">
                 <Button className="w-full">Login</Button>
