@@ -79,7 +79,6 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
   };
 
   const handleLoginSubmit = async (data: credentialDetails) => {
-    // Call the backend function to login
     const error = await loginUser(data);
 
     if (error) {
@@ -98,7 +97,7 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
         return;
       }
     }
-    
+
     login();
     resetForm();
     onClose();
@@ -175,13 +174,6 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
             <DialogFooter>
               <div className="flex flex-col justify-between items-center w-full mt-5">
                 <Button className="w-full" type="submit">Register</Button>
-                <p className="text-gray-500 mt-2 mb-2">- or -</p>
-                <Button className="w-full" variant="outline">
-                  <span className="flex justify-center items-center">
-                    <img src="/google_icon.png" alt="Google icon" className="h-4 w-4 mr-2" />
-                    Sign up with Google
-                  </span>
-                </Button>
                 <div className="flex justify-center items-center mt-4">
                   <p>Already have an account?</p>
                   <Button variant="link" type="button" onClick={() => setShowLoginForm(true)} className="p-1">
@@ -240,13 +232,6 @@ export default function LoginRegister({ isOpen, showLoginForm, setShowLoginForm,
             <DialogFooter>
               <div className="flex flex-col justify-between items-center w-full mt-5">
                 <Button className="w-full">Login</Button>
-                <p className="text-gray-500 mt-2 mb-2">- or -</p>
-                <Button className="w-full" variant="outline">
-                  <span className="flex justify-center items-center">
-                    <img src="/google_icon.png" alt="Google icon" className="h-4 w-4 mr-2" />
-                    Login with Google
-                  </span>
-                </Button>
                 <div className="flex justify-center items-center mt-4">
                   <p>Don't have an account?</p>
                   <Button variant="link" type="button" onClick={() => setShowLoginForm(false)} className="p-1">
