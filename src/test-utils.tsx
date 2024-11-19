@@ -13,5 +13,3 @@ const Providers = ({ children }: { children: ReactNode }) => {
 export function renderWithProviders(ui: ReactElement, options?: RenderOptions) {
   return render(ui, { wrapper: Providers, ...options });
 }
-
-//
