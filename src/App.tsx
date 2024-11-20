@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import "../index.css";
-import Header from "./Header";
+import Header from "./components/Header";
 import LinkGroups from "./LinkGroups";
 import LinkGroupModal from './components/LinkGroupModal';
 import { emptyLinkGroupInfo, initialLinkGroupInfo } from "./constants"

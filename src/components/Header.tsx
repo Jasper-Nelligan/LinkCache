@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { Moon, Sun } from 'lucide-react'
-import { useTheme } from './providers/theme-provider'
-import { useAuth } from './providers/authProvider';
+import { useTheme } from '../providers/theme-provider'
+import { useAuth } from '../providers/authProvider';
 import { useEffect, useState } from 'react';
-import { getUserEmail } from './backend';
+import { getUserEmail } from '../backend';
 
 export default function Header({ onLoginClicked, onRegisterClicked }: { onLoginClicked: () => void, onRegisterClicked: () => void }) {
   const { theme, setTheme } = useTheme()
