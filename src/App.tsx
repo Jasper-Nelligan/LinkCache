@@ -94,19 +94,13 @@ export default function App() {
     // Check if the group already exists
     const existingIndex = linkGroupInfoArray.findIndex((group: LinkGroupInfo) => group.id === linkGroupInfo.id);
     // If it exists, update it, otherwise add it
-    console.log("before", linkGroupInfoArray);
     if (existingIndex !== -1) {
-      console.log(1)
       setLinkGroupInfoArray(linkGroupInfoArray.map((group: LinkGroupInfo) => group.id === linkGroupInfo.id ? linkGroupInfo : group));
     } else {
-      console.log(2)
       setLinkGroupInfoArray([...linkGroupInfoArray, linkGroupInfo]);
     }
-    console.log("after", linkGroupInfoArray);
-
 
     if (isAuthenticated) {
-      console.log("Editing database");
       addLinkGroupToDatabase([...linkGroupInfoArray, linkGroupInfo]);
     } else {
       addLinkGroupToLocalStorage(linkGroupInfo);

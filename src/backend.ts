@@ -10,7 +10,6 @@ export async function addUser(credentials: credentialDetails) {
 }
 
 export async function loginUser(credentials: credentialDetails) {
-  console.log("Logging in with credentials:", credentials);
   try {
     await axios.post('http://localhost:3000/login', { email: credentials.email, password: credentials.password }, { withCredentials: true });
   } catch (error) {
@@ -22,7 +21,7 @@ export async function logoutUser() {
   try {
     await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
   } catch (error) {
-    console.log('An error occurred:', error);
+    console.error('An error occurred:', error);
   }
 }
 
@@ -31,7 +30,7 @@ export async function fetchLinkGroups() {
     const response = await axios.get('http://localhost:3000/user_data', { withCredentials: true });
     return response.data[0].link_data;
   } catch (error) {
-    console.log('An error occurred:', error);
+    console.error('An error occurred:', error);
   }
 }
 
@@ -41,7 +40,7 @@ export async function addLinkGroupToDatabase(linkGroupInfoArray: LinkGroupInfo[]
   try {
     await axios.post('http://localhost:3000/user_data', body, { withCredentials: true });
   } catch (error) {
-    console.log('An error occurred:', error);
+    console.error('An error occurred:', error);
   }
 }
 
@@ -50,7 +49,7 @@ export async function getUserEmail(): Promise<string> {
     const response = await axios.get('http://localhost:3000/user_email', { withCredentials: true });
     return response.data.email;
   } catch (error) {
-    console.log('An error occurred:', error);
+    console.error('An error occurred:', error);
     throw new Error('Failed to fetch user email');
   }
 }
