@@ -28,3 +28,10 @@ export function removeLinkGroupFromLocalStorage(linkGroupId: number) {
 
   localStorage.setItem("linkGroups", JSON.stringify(linkGroupDataLocalStorage));
 }
+
+export function getNextID(linkGroupInfoArray: LinkGroupInfo[]): number {
+  const maxId = linkGroupInfoArray.reduce((max: number, group: { id: number; }) => {
+    return group.id > max ? group.id : max;
+  }, 0);
+  return maxId + 1;
+}
