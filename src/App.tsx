@@ -10,6 +10,7 @@ import LoginRegister from './components/LoginRegister';
 import axios from 'axios';
 import { useAuth } from './providers/authProvider';
 import { addLinkGroupToDatabase, fetchLinkGroups } from './backend';
+require('dotenv').config();
 
 // TODO make group name able to be empty?
 // TODO test database value - submitting too much data
@@ -25,7 +26,7 @@ export default function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get("http://localhost:3000/authStatus", { withCredentials: true });
+        await axios.get(process.env.REACT_APP_API_URL + "/authStatus", { withCredentials: true });
         login();
       } catch (error) {
         console.error("Error checking auth status: ", error);
