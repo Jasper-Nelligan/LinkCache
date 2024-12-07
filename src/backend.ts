@@ -13,6 +13,7 @@ export async function addUser(credentials: credentialDetails) {
 
 export async function loginUser(credentials: credentialDetails) {
   try {
+    console.log(baseURL + '/login')
     await axios.post(baseURL + '/login', { email: credentials.email, password: credentials.password }, { withCredentials: true });
   } catch (error) {
     return handleError(error);
