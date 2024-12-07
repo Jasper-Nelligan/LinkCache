@@ -10,7 +10,6 @@ import LoginRegister from './components/LoginRegister';
 import axios from 'axios';
 import { useAuth } from './providers/authProvider';
 import { addLinkGroupToDatabase, fetchLinkGroups } from './backend';
-require('dotenv').config();
 
 // TODO make group name able to be empty?
 // TODO test database value - submitting too much data
