@@ -25,7 +25,7 @@ export default function App() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        await axios.get(process.env.REACT_APP_API_URL + "/authStatus", { withCredentials: true });
+        await axios.get(import.meta.env.VITE_API_URL + "/authStatus", { withCredentials: true });
         login();
       } catch (error) {
         console.error("Error checking auth status: ", error);
