@@ -115,8 +115,8 @@ export default function LinkGroupModal(
             </FormItem>
           )}
         />
-        <Button type="button" onClick={() => {remove(index)}} variant="ghost" className="self-end">
-          <Trash2 color="red"/>
+        <Button type="button" onClick={() => { remove(index) }} variant="ghost" className="self-end">
+          <Trash2 color="red" />
         </Button>
       </div>
     ))
@@ -136,7 +136,7 @@ export default function LinkGroupModal(
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} data-testid="form">
-              <div className="flex justify-between items-center space-x-4">
+              <div className="flex flex-col md:flex-row justify-between md:items-center md:space-x-4">
                 <FormField
                   control={form.control}
                   name="linkGroupName"
@@ -144,7 +144,7 @@ export default function LinkGroupModal(
                     <FormItem className="flex-1">
                       <FormLabel>Group Name</FormLabel>
                       <FormControl>
-                        <Input {...field} data-testid="group-name-input"/>
+                        <Input {...field} data-testid="group-name-input" />
                       </FormControl>
                     </FormItem>
                   )}
@@ -171,16 +171,15 @@ export default function LinkGroupModal(
               <Button className="mb-4 bg-green-500 hover:bg-green-500/90 dark:bg-green-600 dark:hover:bg-green-600/90" type="button" onClick={() => append({ name: "", url: "" })}>
                 Add Link
               </Button>
-              <DialogFooter className="flex">
-                <Button type="submit" className="w-[100%]">
+              <DialogFooter className="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+                <Button type="submit" className="w-full md:w-[100%]">
                   {isEditForm ? "Save Changes" : "Add Group"}
                 </Button>
-                {
-                  isEditForm &&
-                  <Button type="button" variant="destructive" onClick={onDeleteGroupPressed} className="w-[30%]">
+                {isEditForm && (
+                  <Button type="button" variant="destructive" onClick={onDeleteGroupPressed} className="w-full md:w-[30%]">
                     Delete Group
                   </Button>
-                }
+                )}
               </DialogFooter>
             </form>
           </Form>
