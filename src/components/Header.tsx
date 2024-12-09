@@ -12,14 +12,14 @@ export default function Header() {
 
   return (
     <header className="p-5 flex justify-between items-center">
-      <div className="order-1 flex items-center">
+      <div className="flex items-center">
         <img src="/linkcache_logo.png" alt="Logo" className="h-8 w-8 md:h-16 md:w-16" />
         <div className="ml-2">
           <h1 className="text-primary text-3xl font-bold">Link Cache</h1>
           <h2 className="text-secondary text-xl font-bold hidden md:block">Effortless Access to Your Favourite Links</h2>
         </div>
       </div>
-      <div className="order-2 flex items-center justify-center md:mt-0">
+      <div className="flex items-center justify-center md:mt-0">
         <div className="flex space-x-4 mt-3 md:mt-0 md:mr-4">
           <Button onClick={() => handleThemeChange()} variant="ghost" size="icon">
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
