@@ -1,4 +1,4 @@
-import { colors, emptyLinkGroupInfo } from "@/constants";
+import { emptyLinkGroupInfo } from "@/constants";
 import { describe, expect, it, vi } from "vitest";
 import LinkGroupModal from "./LinkGroupModal";
 import { fireEvent, render, waitFor } from '@testing-library/react';

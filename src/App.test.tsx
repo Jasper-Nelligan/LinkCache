@@ -1,25 +1,20 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react';
+import { screen, fireEvent, waitFor, render } from '@testing-library/react';
 import App from './App';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { colors, initialLinkGroupInfo } from './constants';
-import { renderWithProviders } from './test-utils';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import * as auth from './providers/authProvider';
 
 describe('App Component', () => {
   const axiosMock = new MockAdapter(axios);
 
   beforeEach(() => {
-    vi.spyOn(auth, 'useAuth').mockResolvedValue(
-      { isAuthenticated: true, login: vi.fn(), logout: vi.fn() }
-    );
     axiosMock.reset();
     localStorage.clear();
   });
 
   it('uses the initial link group info if no data is in local storage', async () => {
-    renderWithProviders(<App />);
+    render(<App />);
 
     await waitFor(() => {
       // Check local storage
@@ -37,7 +32,7 @@ describe('App Component', () => {
   });
 
   it('renders LinkGroupModal for new group', async () => {
-    renderWithProviders(<App />);
+    render(<App />);
 
     fireEvent.click(screen.getByTestId('new-link-group-btn'));
 
@@ -54,7 +49,7 @@ describe('App Component', () => {
   })
 
   it('renders LinkGroupModal for existing group', async () => {
-    renderWithProviders(<App />);
+    render(<App />);
 
     fireEvent.click(screen.getAllByTestId('edit-link-group-btn')[0]);
 
@@ -85,7 +80,7 @@ describe('App Component', () => {
   })
 
   it("add new group", async () => {
-    renderWithProviders(<App />);
+    render(<App />);
 
     fireEvent.click(screen.getByTestId('new-link-group-btn'));
 
@@ -127,7 +122,7 @@ describe('App Component', () => {
   });
 
   it("edit existing group", async () => {
-    renderWithProviders(<App />);
+    render(<App />);
 
     fireEvent.click(screen.getAllByTestId('edit-link-group-btn')[0]);
 
@@ -148,7 +143,7 @@ describe('App Component', () => {
   });
 
   it("delete existing group", () => {
-    renderWithProviders(<App />);
+    render(<App />);
 
     fireEvent.click(screen.getAllByTestId('edit-link-group-btn')[0]);
     
@@ -169,7 +164,7 @@ describe('App Component', () => {
       { isAuthenticated: true, login: vi.fn(), logout: vi.fn() }
     );
 
-    renderWithProviders(<App />);
+    render(<App />);
 
     waitFor(() => {
       expect(axiosMock.history.get.length).toBe(1);

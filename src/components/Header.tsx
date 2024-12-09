@@ -1,26 +1,9 @@
 import { Button } from '@/components/ui/button'
 import { Moon, Sun } from 'lucide-react'
 import { useTheme } from '../providers/theme-provider'
-import { useAuth } from '../providers/authProvider';
-import { useEffect, useState } from 'react';
-import { getUserEmail } from '../backend';
 
-export default function Header({ onLoginClicked, onRegisterClicked }: { onLoginClicked: () => void, onRegisterClicked: () => void }) {
+export default function Header() {
   const { theme, setTheme } = useTheme()
-  const { isAuthenticated, logout } = useAuth();
-  const [userName, setUserName] = useState<string | null>(null)
-
-  useEffect(() => {
-    const fetchUserEmailFromBackend = async () => {
-      if (isAuthenticated) {
-        const email = await getUserEmail();
-        const username = email.split('@')[0];
-        setUserName(username);
-      }
-    }
-
-    fetchUserEmailFromBackend();
-  }, [isAuthenticated])
 
   const handleThemeChange = () => {
     if (theme === "light") setTheme("dark")
@@ -37,22 +20,12 @@ export default function Header({ onLoginClicked, onRegisterClicked }: { onLoginC
         </div>
       </div>
       <div className="order-1 md:order-2 flex flex-col md:flex-row items-center md:mt-0">
-        {isAuthenticated && (
-          <div className="flex justify-center items-center">
-            <p>Welcome, {userName}!</p>
-            <Button variant="ghost" onClick={logout}>Logout</Button>
-          </div>
-        )}
-        {!isAuthenticated && (
           <div className="flex space-x-4 mt-4 md:mt-0 md:mr-4">
             <Button onClick={() => handleThemeChange()} variant="ghost" size="icon">
               <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
               <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
-            <Button variant="ghost" onClick={onLoginClicked}>Login</Button>
-            <Button variant="outline" onClick={onRegisterClicked}>Register</Button>
           </div>
-        )}
       </div>
     </header>
   );
