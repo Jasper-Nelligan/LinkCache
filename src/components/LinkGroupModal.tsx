@@ -15,6 +15,7 @@ import ColorOptions from "./ColorOptions";
 import { LinkGroupInfo } from "@/types";
 import { useEffect } from "react";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { Trash2 } from "lucide-react";
 
 // TODO rename this to LinkGroupFormModal
 export default function LinkGroupModal(
@@ -115,7 +116,7 @@ export default function LinkGroupModal(
           )}
         />
         <Button type="button" onClick={() => {remove(index)}} variant="ghost" className="self-end">
-          <img src="/trash_icon.png" alt="Delete Link" className="h-5 w-5" />
+          <Trash2 color="red"/>
         </Button>
       </div>
     ))
