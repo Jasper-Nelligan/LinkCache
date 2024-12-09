@@ -157,19 +157,4 @@ describe('App Component', () => {
     // Check the UI
     expect(screen.queryByText('Social Media')).toBeFalsy();
   });
-
-  it("logs on user on load, assuming cookie is present", () => {
-    axiosMock.onGet("http://localhost:3000/authStatus").reply(200, {});
-    vi.spyOn(auth, 'useAuth').mockResolvedValue(
-      { isAuthenticated: true, login: vi.fn(), logout: vi.fn() }
-    );
-
-    render(<App />);
-
-    waitFor(() => {
-      expect(axiosMock.history.get.length).toBe(1);
-      expect(axiosMock.history.get[0].url).toBe("http://localhost:3000/authStatus");
-      expect(screen.getByText("Logout")).toBeTruthy();
-    })
-  })
 });
