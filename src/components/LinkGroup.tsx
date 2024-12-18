@@ -2,13 +2,9 @@ import { Button } from '@/components/ui/button';
 import { LinkGroupInfo } from '@/types';
 import { SquarePen } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import { getURLIconSrc } from '@/utils';
 
 function LinkGroup({ linkGroupInfo, onOpenModal }: { linkGroupInfo: LinkGroupInfo, onOpenModal: (linkGroupId: number) => void }) {
-  const getURLIconSrc = (url: string): string => {
-    const strippedURL = url.replace(/^https?:\/\//, '');
-    return `https://icons.duckduckgo.com/ip2/${strippedURL}.ico`;
-  };
-
   const renderLinks = linkGroupInfo.linkPairs.map((linkInfo, index) => (
     <div className="flex items-center" key={index}>
       <img src={getURLIconSrc(linkInfo.url)} alt={linkInfo.name} className="h-6 w-6" />

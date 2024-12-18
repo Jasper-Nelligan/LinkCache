@@ -35,3 +35,10 @@ export function getNextID(linkGroupInfoArray: LinkGroupInfo[]): number {
   }, 0);
   return maxId + 1;
 }
+
+export function getURLIconSrc(url: string): string {
+  // Remove http:// or https://, as well as everything after the domain
+  const strippedURL = url.replace(/^https?:\/\/([^\/]+).*/, '$1');
+  console.log(strippedURL);
+  return `https://icons.duckduckgo.com/ip2/${strippedURL}.ico`;
+}
