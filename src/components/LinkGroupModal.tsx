@@ -30,11 +30,20 @@ export default function LinkGroupModal(
 ) {
   const isEditForm = linkGroupInfo.linkGroupName ? true : false;
 
+  // Populate with empty link pairs to ensure there are always 4 pairs
+  const populateEmptyLinkPairs = (linkPairs: { name: string, url: string }[]) => {
+    while (linkPairs.length < 4) {
+      linkPairs.push({ name: "", url: "" });
+    }
+
+    return linkPairs;
+  }
+
   useEffect(() => {
     form.reset({
       linkGroupName: linkGroupInfo.linkGroupName,
       color: linkGroupInfo.color,
-      linkPairs: linkGroupInfo.linkPairs.length > 0 ? linkGroupInfo.linkPairs : Array(4).fill({ name: "", url: "" }),
+      linkPairs: populateEmptyLinkPairs(linkGroupInfo.linkPairs)
     });
   }, [linkGroupInfo])
 
@@ -69,10 +78,11 @@ export default function LinkGroupModal(
   }
 
   const onCancel = () => {
+    
     form.reset({
       linkGroupName: linkGroupInfo.linkGroupName,
       color: linkGroupInfo.color,
-      linkPairs: linkGroupInfo.linkPairs.length > 0 ? linkGroupInfo.linkPairs : Array(4).fill({ name: "", url: "" }),
+      linkPairs: populateEmptyLinkPairs(linkGroupInfo.linkPairs)
     });
     onClose();
   }
