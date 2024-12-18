@@ -7,7 +7,9 @@ import { getURLIconSrc } from '@/utils';
 function LinkGroup({ linkGroupInfo, onOpenModal }: { linkGroupInfo: LinkGroupInfo, onOpenModal: (linkGroupId: number) => void }) {
   const renderLinks = linkGroupInfo.linkPairs.map((linkInfo, index) => (
     <div className="flex items-center" key={index}>
-      <img src={getURLIconSrc(linkInfo.url)} alt={linkInfo.name} className="h-6 w-6" />
+      {linkInfo.url && (
+          <img src={getURLIconSrc(linkInfo.url)} alt={linkInfo.name} className="h-6 w-6" />
+      )}
       <a href={linkInfo.url} className="text-blue-500 ml-2">{linkInfo.name}</a>
     </div>
   ));
